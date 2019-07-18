@@ -1,5 +1,19 @@
 <script>
 	export let name = 'Produktname';
+
+	let promise = fetchProductData();
+
+	async function fetchProductData() {
+		const res = await fetch(`/api/product/buchstabe-e.json`);
+
+		if (res.ok) {
+			const product = await res.json();
+			return product.price.toString().replace(/\./,',');
+		} else {
+			throw new Error(res.statusText);
+		}
+	}
+
 </script>
 
 <div class="container mx-auto px-4">
@@ -30,8 +44,14 @@
 	</div>
 
 	<div class="flex items-baseline max-w-sm mt-8 mx-auto">
-		<div class="flex-1 text-5xl">3,95 €</div>
-		<div class="flex-1 text-2xl">pro Stück</div>
+		{#await promise}
+			<div class="flex-1 text-gray-600">... wird geladen</div>
+		{:then price}
+			<div class="flex-1 text-5xl">{price} €</div>
+			<div class="flex-1 text-2xl">pro Stück</div>
+		{:catch error}
+			<div class="flex-1 text-red-300">{error.message}</div>
+		{/await}
 	</div>
 </div>
 
