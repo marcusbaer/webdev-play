@@ -1,0 +1,33 @@
+{
+  "name": "webdev-play",
+  "version": "1.0.0",
+  "description": "a playground for web.dev",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "css-loader": "^3.0.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "start:dev": "webpack-dev-server --port 3000 --content-base public",
+    "start": "static public -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.pixelpark.com:webdev/play.git"
+  },
+  "keywords": [
+    "play",
+    "web.dev",
+    "frontend"
+  ],
+  "author": "Marcus Baer <marcus.baer@publicispixelpark.de>",
+  "license": "ISC"
+}
