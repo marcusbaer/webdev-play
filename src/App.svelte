@@ -1,0 +1,52 @@
+<script>
+	export let name = 'Produktname';
+</script>
+
+<div class="container mx-auto px-4">
+  
+	<div class="flex pb-4 pt-4">
+		<h3 class="text-4xl">{ name }</h3>
+	</div>
+
+	<div class="md:flex">
+		<div class="md:flex-shrink-0">
+			<img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase">
+		</div>
+		<div class="mt-4 md:mt-0 md:ml-6">
+			<div class="uppercase tracking-wide text-sm text-red-600 font-bold">Top Angebot</div>
+			<a href="./index.html" class="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">Deutschlands meistverkaufter Buchstabe</a>
+			<p class="mt-2 text-gray-600">
+			Als fünfter Buchstabe des deutschen Alphabets reiht sich das E ganz vorn in die Riege der Buchstaben ein.
+			Nicht umsonst bekam es auf Tastaturen einen Top-Platz innerhalb der glorreichen QWERTZ.
+			Kaufen auch Sie ein E und erleben Sie, wie flexibel sich dieser Buchstabe einsetzen lässt!
+			</p>
+		</div>
+	</div>
+
+	<div class="flex bg-gray-200 mt-8">
+		<div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">häufig</div>
+		<div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">vielseitig einsetzbar</div>
+		<div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">pflegeleicht</div>
+	</div>
+
+	<div class="flex items-baseline max-w-sm mt-8 mx-auto">
+		<div class="flex-1 text-5xl">3,95 €</div>
+		<div class="flex-1 text-2xl">pro Stück</div>
+	</div>
+</div>
+
+<form action="./checkout.html" class="flex bg-gray-200 mt-8 items-center pb-4 pt-8">
+	<div class="flex-auto text-center px-4 py-2 m-2">
+		Anzahl
+	</div>
+
+	<div class="flex-auto text-gray-700 text-center px-4 py-2 m-2">
+		<input type="number" name="quantity" value="1" class="text-black text-2xl">
+	</div>
+		
+	<div class="flex-auto text-gray-700 text-center px-4 py-2 m-2">
+		<button class="bg-blue-500 hover:bg-blue-700 text-center text-white font-bold py-2 px-4 rounded" rel="js-click-button">
+		Jetzt kaufen
+		</button>
+	</div>
+</form>

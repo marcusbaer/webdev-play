@@ -1,11 +1,12 @@
-const app = async function main() {
-  
-    // JS for button
-    const button = window.document.querySelector('[rel=js-click-button]')
+import App from './App.svelte';
 
-    button.addEventListener('click', () => {
-        location.href = 'checkout.html'
-    })
-}
+const app = new App({
+	target: document.body,
+	props: {
+		name: 'Buchstabe E'
+	}
+});
+
+window.app = app;
 
 export default app;
