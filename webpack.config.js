@@ -8,8 +8,8 @@ module.exports = {
 		bundle: ['./src/main.js']
 	},
 	resolve: {
-		extensions: ['.mjs', '.js'],
-		mainFields: ['browser', 'module', 'main']
+		extensions: ['.mjs', '.js', '.svelte'],
+		mainFields: ['svelte', 'browser', 'module', 'main']
 	},
 	output: {
 		path: __dirname + '/public',
@@ -18,6 +18,16 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.svelte$/,
+				use: {
+					loader: 'svelte-loader',
+					options: {
+						emitCss: true,
+						hotReload: true
+					}
+				}
+			},
 			{
 				test: /\.css$/,
 				use: [
