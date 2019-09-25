@@ -9,22 +9,24 @@ export function App (el = 'body', personsList = []) {
     return new Vue({
         el,
         template: `<div class="app p-2" style="width: 100%">
-            <h1 class="text-lg leading-tight font-semibold text-gray-900" @click="toggleDebug">{{ h1 }}</h1>
+            <h1 class="text-lg leading-tight font-semibold text-center text-gray-900" @click="toggleDebug">{{ h1 }}</h1>
             <ul>
-                <li v-for="(person, index) in persons" :key="index">
-                    <div>{{ person.name }}</div>
-                    <div>{{ person.citation }}</div>
-                    <div>{{ getContact(person) }}</div>
+                <li v-for="(person, index) in persons" :key="index" class="mt-3">
+                    <div class="">{{ person.name }}</div>
+                    <div class="italic text-base pl-3">„{{ person.citation }}“</div>
+                    <div class="pl-3 text-xs">{{ getContact(person) }}</div>
                 </li>
             </ul>
-            <p class="pt-4">Greif schnell zu! Dieses Angebot läuft bereits seit {{ uptime }} Sekunden!</p>
-            <button class="bg-blue-500 hover:bg-blue-700 text-center text-white font-bold mt-8 py-2 px-4 rounded" @click="toggleCounterRunner" @style="buttonStyle">Ich will keine Zeit verlieren!</button>
+            <div class="text-center">
+                <p class="pt-8 text-lg">Greif schnell zu! Dieses Angebot läuft bereits seit {{ uptime }} Sekunden!</p>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-8 py-2 px-4 rounded" @click="toggleCounterRunner" @style="buttonStyle">Ich will keine Zeit verlieren!</button>
+            </div>
             <pre class="p-4" :style="expandableStyle" v-expandable:500.a.b="stopCounter" v-if="showDebug">{{ debug }}</pre>
         </div>`,
         // props: ['persons'],
         data () {
             return {
-                h1: 'Frühere Käufer',
+                h1: 'Stimmen früherer Käufer',
                 counterInterval: null,
                 counter: 0,
                 persons: personsList,
@@ -58,9 +60,8 @@ export function App (el = 'body', personsList = []) {
         directives: {
             expandable: {
                 bind: function (el, binding, vnode) {
-                    
-                    console.log('BIND directive', binding.name, binding.arg, binding.modifiers, binding.value)
-                    console.log(vnode.data.directives, vnode.context)
+                    // console.log('BIND directive', binding.name, binding.arg, binding.modifiers, binding.value)
+                    // console.log(vnode.data.directives, vnode.context)
                 }
             }
         },

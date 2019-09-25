@@ -5,20 +5,10 @@ import Person from './person.js';
 import theAnswer, { PI } from './numbers.js';
 import uppercase from './uppercase.js';
 
-console.log('UTILS DEMO:', uppercase('green'), theAnswer, PI);
-
 async function parse() {
-    const body = window.document.querySelector('body');
-    const mainData = await getMainData();
+    console.log('UTILS DEMO:', uppercase('green'), theAnswer, PI);
 
-    // const p = window.document.createElement('pre');
-    // const text = window.document.createTextNode(JSON.stringify(mainData, undefined, 2));
-
-    console.log(mainData.map(person => {
-        return person.name + (person.contact.length ? ': ' + person.contact.map(item => item.shortDescription).join(', ') : '')
-    }));
-
-    App('#app', mainData);
+    App('#app', await getMainData());
 }
 
 function getMainData(ignoreTypeScript = false) {
