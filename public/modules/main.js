@@ -1,5 +1,6 @@
 'use strict';
 
+import App from './App.js';
 import Person from './person.js';
 import theAnswer, { PI } from './numbers.js';
 import uppercase from './uppercase.js';
@@ -8,36 +9,26 @@ console.log('UTILS DEMO:', uppercase('green'), theAnswer, PI);
 
 async function parse() {
     const body = window.document.querySelector('body');
-    const mainResult = await main();
+    const mainData = await getMainData();
 
-    const p = window.document.createElement('pre');
-    const text = window.document.createTextNode(JSON.stringify(mainResult, undefined, 2));
+    // const p = window.document.createElement('pre');
+    // const text = window.document.createTextNode(JSON.stringify(mainData, undefined, 2));
 
-    console.log(mainResult);
-    const shortList = mainResult.map(person => {
+    console.log(mainData.map(person => {
         return person.name + (person.contact.length ? ': ' + person.contact.map(item => item.shortDescription).join(', ') : '')
-    });
+    }));
 
-    const ul = window.document.createElement('ul');
-    shortList.forEach(item => {
-        const li = window.document.createElement('li');
-        li.innerHTML = item;
-        ul.appendChild(li);
-    })
-
-    p.appendChild(text);
-    body.appendChild(ul);
-    body.appendChild(p);
+    App('#app', mainData);
 }
 
-async function main(ignoreTypeScript = false) {
+function getMainData(ignoreTypeScript = false) {
 
     return [
-        Person.create({type: 'adult', name: 'Bob', age: 36, email: 'bob@family.com', phone: '+31 733 48943 448', children: ['Deborah']}),
-        Person.create({type: 'child', name: 'Emily', age: 8, email: 'emily@family.com', favorite: 'Teddy'}),
+        Person.create({type: 'adult', name: 'Bernd', age: 36, email: 'bernd@family.com', phone: '+49 733 48943 448', children: ['Emilia'], citation: 'Wir sind so froh, dass wir noch ein E bekommen haben.'}),
+        Person.create({type: 'child', name: 'Emilia', age: 8, email: 'emilia@family.com', favorite: 'Teddy', citation: 'Ohne das E hätte ich nie reden gelernt. Mein Name würde auch nicht funktionieren.'}),
     ];
 }
 
 window.onload = parse;
 
-export default main;
+export default getMainData;

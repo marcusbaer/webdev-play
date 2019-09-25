@@ -30,6 +30,7 @@ class Phone extends Contact {
 class Person {
     constructor (options = {}) {
         this.age = options.age || null;
+        this.citation = options.citation || null;
         this.contact = [];
         this.name = options.name || null;
 
