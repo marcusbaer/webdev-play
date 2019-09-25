@@ -61,7 +61,7 @@ export function App (el = 'body', personsList = []) {
                 </li>
             </ul>
             <div class="text-center">
-                <p class="pt-8 text-lg">Greif schnell zu! Dieses Angebot läuft bereits seit {{ uptime }} Sekunden!</p>
+                <p class="pt-8 text-lg">Greif schnell zu! Dieses Angebot läuft bereits seit <span class="text-red-600">{{ uptime }}</span> Sekunden!</p>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-8 py-2 px-4 rounded" @click="toggleCounterRunner" @style="buttonStyle">Ich will keine Zeit verlieren!</button>
             </div>
             <pre class="p-4" :style="expandableStyle" v-expandable:500.a.b="stopCounter" v-if="showDebug">{{ debug }}</pre>
