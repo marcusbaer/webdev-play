@@ -1,15 +1,58 @@
 // https://salomvary.com/es6-modules-in-browsers.html
 // https://www.jsdelivr.com/
 
-import { Vue } from './vendor.js'
+import { Vue, Vuex } from './vendor.js'
 // import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js'
 
 export function App (el = 'body', personsList = []) {
 
+    Vue.use(Vuex)
+
+    const storeLogPlugin = store => {
+        // called when the store is initialized
+        store.subscribe((mutation, state) => {
+            // called after every mutation.
+            // The mutation comes in the format of `{ type, payload }`.
+            console.group('Store log');
+            console.log(mutation);
+            console.log(state);
+            console.groupEnd('Store log');
+        })
+    }
+
+    const persons = {
+        namespaced: true,
+        state: {
+            persons: personsList,
+        },
+        getters: {
+            numberOfVoices: state => state.persons.length,
+        },
+        actions: {
+            reset (context) {
+                context.commit('reset')
+            }
+        },
+        mutations: {
+            reset (state) {
+                state.persons = []
+            },
+        }
+    }
+
+    const store = new Vuex.Store({
+        modules: {
+            persons
+        },
+        strict: true, // In strict mode, whenever Vuex state is mutated outside of mutation handlers, an error will be thrown
+        plugins: [storeLogPlugin]
+    })
+
     return new Vue({
         el,
+        store,
         template: `<div class="app p-2" style="width: 100%">
-            <h1 class="text-lg leading-tight font-semibold text-center text-gray-900" @click="toggleDebug">{{ h1 }}</h1>
+            <h1 v-if="peopleCount > 0" class="text-lg leading-tight font-semibold text-center text-gray-900" @click="toggleDebug">{{ h1 }}</h1>
             <ul>
                 <li v-for="(person, index) in persons" :key="index" class="mt-3">
                     <div class="">{{ person.name }}</div>
@@ -29,7 +72,6 @@ export function App (el = 'body', personsList = []) {
                 h1: 'Stimmen früherer Käufer',
                 counterInterval: null,
                 counter: 0,
-                persons: personsList,
                 expandableStyle: {
                     color: 'red',
                     display: 'block',
@@ -45,13 +87,20 @@ export function App (el = 'body', personsList = []) {
             this.startCounter()
         },
         computed: {
+            ...Vuex.mapGetters({
+                peopleCount: 'persons/numberOfVoices',
+            }),
             buttonStyle () {
-            return {
-                backgroundColor: this.counterInterval ? 'light-gray' : 'blue'
-            }
+                return {
+                    backgroundColor: this.counterInterval ? 'light-gray' : 'blue'
+                }
             },
             debug () {
                 return JSON.stringify(this.persons, undefined, 2)
+            },
+            persons: {
+                get: function () { return this.$store.state.persons.persons },
+                set: function (value) { this.$store.dispatch('reset'); }
             },
             uptime () {
                 return this.counter
