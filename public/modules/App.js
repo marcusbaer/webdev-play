@@ -3,8 +3,9 @@
 
 import { Vue, Vuex } from './vendor.js'
 // import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js'
+import { PersonsService } from './services.js'
 
-export function App (el = 'body', personsList = []) {
+export function App (el = 'body', initialPersonsList = []) {
 
     Vue.use(Vuex)
 
@@ -23,12 +24,15 @@ export function App (el = 'body', personsList = []) {
     const persons = {
         namespaced: true,
         state: {
-            persons: personsList,
+            persons: initialPersonsList,
         },
         getters: {
             numberOfVoices: state => state.persons.length,
         },
         actions: {
+            initialize (context) {
+                PersonsService.load().then(data => context.commit('set', data))
+            },
             reset (context) {
                 context.commit('reset')
             }
@@ -36,6 +40,9 @@ export function App (el = 'body', personsList = []) {
         mutations: {
             reset (state) {
                 state.persons = []
+            },
+            set (state, persons = []) {
+                state.persons = persons
             },
         }
     }
@@ -84,6 +91,7 @@ export function App (el = 'body', personsList = []) {
             }
         },
         created () {
+            this.initializePersons()
             this.startCounter()
         },
         computed: {
@@ -100,7 +108,7 @@ export function App (el = 'body', personsList = []) {
             },
             persons: {
                 get: function () { return this.$store.state.persons.persons },
-                set: function (value) { this.$store.dispatch('reset'); }
+                set: function (value) { this.$store.dispatch('persons/reset'); }
             },
             uptime () {
                 return this.counter
@@ -117,6 +125,9 @@ export function App (el = 'body', personsList = []) {
         methods: {
             getContact (person) {
                 return person.contact.map(item => item.shortDescription).join(', ')
+            },
+            initializePersons () {
+                this.$store.dispatch('persons/initialize')
             },
             startCounter () {
                 this.counterInterval = setInterval(this.incrementCounter, 1000)
