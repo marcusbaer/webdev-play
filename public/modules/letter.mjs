@@ -1,5 +1,6 @@
 // https://v8.dev/features/class-fields#private-class-fields
 // https://developers.google.com/web/updates/2019/07/devtools#privateclassfields
+// https://medium.com/edge-coders/whats-new-in-es2017-or-es8-for-javascript-40352b089780
 
 export default class Letter {
 
