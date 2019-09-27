@@ -4,9 +4,14 @@
 import { Vue, Vuex } from './vendor.js'
 // import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js'
 import { PersonsService } from './services.js'
+import Letter, { E } from './letter.mjs'
 import AppTemplate from './tpl/App.html'
 
 export function App (el = 'body', initialPersonsList = []) {
+
+    const e = new E('red')
+    console.log(e.toggleCase(), e.info, e.print())
+    // console.log(e.#color)
 
     Vue.use(Vuex)
 
