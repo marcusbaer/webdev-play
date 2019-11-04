@@ -61,6 +61,10 @@ export function App (el = 'body', initialPersonsList = []) {
         plugins: [storeLogPlugin]
     })
 
+    const uppercaseFilter = (value) => value.toUpperCase()
+
+    Vue.filter('uppercase', uppercaseFilter)
+
     return new Vue({
         el,
         store,
