@@ -19,15 +19,11 @@
     "start": "static public -p 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@git.pixelpark.com:webdev/play.git"
-  },
   "keywords": [
     "play",
     "web.dev",
     "frontend"
   ],
-  "author": "Marcus Baer <marcus.baer@publicispixelpark.de>",
+  "author": "Marcus Baer",
   "license": "ISC"
 }
