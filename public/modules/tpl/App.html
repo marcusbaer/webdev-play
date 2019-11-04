@@ -1,10 +1,10 @@
 <div class="app p-2" style="width: 100%">
-    <h1 v-if="peopleCount > 0" class="text-lg leading-tight font-semibold text-center text-gray-900" @click="toggleDebug">{{ h1 }}</h1>
+    <h1 v-if="peopleCount > 0" class="text-lg leading-tight font-semibold text-center text-gray-900" @click="toggleDebug" v-pointer>{{ h1 }}</h1>
     <ul>
         <li v-for="(person, index) in persons" :key="index" class="mt-3">
-            <div class="">{{ person.name | uppercase }}</div>
+            <div class="" @click="toggle" v-pointer="show">{{ person.name | uppercase }}</div>
             <div class="italic text-base pl-3">„{{ person.citation }}“</div>
-            <div class="pl-3 text-xs">{{ getContact(person) }}</div>
+            <div class="pl-3 text-xs" v-if="show">{{ getContact(person) }}</div>
         </li>
     </ul>
     <div class="text-center">

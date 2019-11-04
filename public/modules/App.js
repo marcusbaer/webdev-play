@@ -65,8 +65,43 @@ export function App (el = 'body', initialPersonsList = []) {
 
     Vue.filter('uppercase', uppercaseFilter)
 
+    const toggleMixin = {
+        data () {
+            return {
+                show: false,
+            }
+        },
+        created () {
+            this.show = true
+        },
+        computed: {
+            statusStyle () {
+                return {
+                color: this.show ? 'green' : 'red'
+                }
+            }
+        },
+        methods: {
+            toggle () {
+                this.show = !this.show
+            }
+        }
+    }
+    // Vue.mixin('toggleMixin', toggleMixin) // global definition...
+
+    Vue.directive('pointer', {
+        bind (el, binding, vnode) {
+            el.style.cursor = 'pointer'
+        },
+        componentUpdated (el, binding, vnode) {
+            el.style.fontStyle = binding.value ? 'italic' : 'normal'
+            // el.style.fontStyle = vnode.context.show ? 'normal' : 'italic'
+        }
+    })
+
     return new Vue({
         el,
+        mixins: [ toggleMixin ],
         store,
         template: AppTemplate,
         // props: ['persons'],
