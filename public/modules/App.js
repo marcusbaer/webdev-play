@@ -9,6 +9,8 @@ import AppTemplate from './tpl/App.html'
 
 export function App (el = 'body', initialPersonsList = []) {
 
+    performance.mark('app-start')
+
     const e = new E('red')
     console.log(e.toggleCase(), e.info, e.print())
     // console.log(e.#color)
@@ -124,6 +126,14 @@ export function App (el = 'body', initialPersonsList = []) {
         created () {
             this.initializePersons()
             this.startCounter()
+
+            performance.mark('app-created')
+            performance.measure('app initialization', 'app-start', 'app-created')
+            performance.measure('page initialization', undefined, 'app-created')
+
+            console.log(performance.getEntriesByType('measure'))
+            performance.clearMarks()
+            performance.clearMeasures()
         },
         computed: {
             ...Vuex.mapGetters({
