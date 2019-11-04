@@ -1,1 +1,1 @@
-export default str => str.toUpperCase()
+export default str => str.toUpperCase();

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import Person from './person.js';
+import Person from "./person.js";
 
 // function createPersonsList() {
 
@@ -11,18 +11,22 @@ import Person from './person.js';
 // }
 
 export const PersonsService = {
-    async load (config = {}) {
-        // return createPersonsList()
-        // return new Promise((resolve, reject) => {})
+  async load(config = {}) {
+    // return createPersonsList()
+    // return new Promise((resolve, reject) => {})
 
-        // upcoming I: errors or warnings might be collected in an array to be displayed somewhere...
-        // upcoming II: fetch should have then and catch and finally blocks
-        return fetch(`api/persons.json`).then(response => response.json())
-        .then(json => json.result)
-        .then(result => result.map(item => Person.create(item)))
-        .catch(err => { console.error(err); return []; })
-        .finally(() => console.log('Persons loaded'))
-    },
-}
+    // upcoming I: errors or warnings might be collected in an array to be displayed somewhere...
+    // upcoming II: fetch should have then and catch and finally blocks
+    return fetch(`api/persons.json`)
+      .then(response => response.json())
+      .then(json => json.result)
+      .then(result => result.map(item => Person.create(item)))
+      .catch(err => {
+        console.error(err);
+        return [];
+      })
+      .finally(() => console.log("Persons loaded"));
+  }
+};
 
 export default PersonsService;

@@ -1,1 +1,1 @@
-importScripts('sw/cache.js');
+importScripts("sw/cache.js");

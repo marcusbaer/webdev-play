@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-import App from './App.js';
-import theAnswer, { PI } from './numbers.js';
-import uppercase from './uppercase.js';
+import App from "./App.js";
+import theAnswer, { PI } from "./numbers.js";
+import uppercase from "./uppercase.js";
 
 async function parse() {
-    console.log('UTILS DEMO:', uppercase('green'), theAnswer, PI);
+  console.log("UTILS DEMO:", uppercase("green"), theAnswer, PI);
 
-    App('#app');
+  App("#app");
 }
 
 window.onload = parse;
