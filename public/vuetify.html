@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <style>
+        .clickable {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <header>
+                <b-alert show>Default alert with counter set to {{ count }}.</b-alert>
+                <b-alert variant="danger" dismissible :show="showDismissibleAlert"
+                    @dismissed="showDismissibleAlert=false">
+                    Dismissible Alert!
+                </b-alert>
+                <v-alert v-model="alert" dismissible type="success">
+                    This is a success alert that is closable.
+                </v-alert>
+            </header>
+            <v-content>
+                <v-container>Hello world</v-container>
+                <v-container>
+                    <blockquote class="blockquote">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum
+                        maiores modi quidem veniam, expedita quis laboriosam, ullam facere adipisci, iusto, voluptate
+                        sapiente corrupti asperiores rem nemo numquam fuga ab at.</blockquote>
+                </v-container>
+                <v-container>
+                    <div>
+                        <b-button variant="primary" @click="confirmAction">OK</b-button>
+                        <b-btn v-b-modal.modal1>Cancel</b-btn>
+                        <!-- Modal Component -->
+                        <b-modal id="modal1" title="Cancel warning">
+                            <p class="my-4">If you cancel, you cannot do things.</p>
+                        </b-modal>
+                    </div>
+                </v-container>
+                <!-- <v-container> -->
+                <!-- <img v-b-modal.modal2 class="clickable" src="data:image/png;base64,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" alt="5901234123457" rel="js-barcode" height="100" alt="QR Code" rel="js-barcode" @click="readBarcode"> -->
+                <!-- <img src="./scratch/ean-13.png" alt="EAN-13" rel="js-barcode"> -->
+                <!-- <img v-b-modal.modal2 class="clickable" src="./scratch/qr-code.png" height="100" alt="QR Code" rel="js-barcode" @click="readBarcode"> -->
+                <!-- <b-modal id="modal2" :title="modalTitle">
+                <p class="my-4">{{ modalText }}</p>
+            </b-modal> -->
+                <!-- </v-container> -->
+                <v-container>
+                    <order-history-details :order="order" :placed-by="placedBy" :shipped-to="shippedTo">
+                    </order-history-details>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
+
+    <div id="appart">A second Vue.JS element on this page can also use the shared counter from store: {{ count }}.</div>
+
+    <div id="approute">
+        <h4>{{ hi }}, router!</h4>
+        <p>
+            <!-- use router-link component for navigation. -->
+            <!-- specify the link by passing the `to` prop. -->
+            <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+            <router-link to="/bar">Go to Bar</router-link>
+            <router-link to="/foo">Go to Foo</router-link>
+            <router-link to="/user/max">Go to Max</router-link>
+        </p>
+        <!-- route outlet -->
+        <!-- component matched by the route will render here -->
+        <router-view></router-view>
+    </div>
+
+    <footer>
+        Example demonstrated <a href="https://vuetifyjs.com/en/getting-started/quick-start" target="_blank">Vuetify</a>,
+        <a href="https://bootstrap-vue.js.org/" target="_blank">Bootstrap-Vue</a>
+        and <a href="https://vuex.vuejs.org/" target="_blank">Vuex</a>.
+        Get inspired by <a href="https://vuejsexamples.com/" target="_blank">https://vuejsexamples.com/</a>.
+    </footer>
+
+    <script type="text/x-template" id="tpl-order-history-details-summary">
+  	<div class="oh-details__summary" v-if="order.SalesOrderNumber">
+<!--
+      <input type="number" v-model.number="orderId" min="1" max="99" v-focus v-debounce:500.a.b="setOrderId">
+-->
+      <v-list flat>
+        <v-subheader>Summary</v-subheader>
+        <v-list-item-group v-model="group">
+          <v-list-item flat v-for="(item, i) in summary" :key="i">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.key"></v-list-item-title>
+              <v-list-item-subtitle>{{ item.value | formatDate }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </div>
+  </script>
+
+    <script type="text/x-template" id="tpl-order-history-details-partner">
+    <div class="oh-details__partner">
+      <h4>{{ headline }}</h4>
+      <span>{{partner.PartnerName}}</span><br>
+      <span v-if="!isNameOnly">
+        {{partner.PartnerStreet}}<br>
+        {{partner.PartnerZipCode}} {{partner.PartnerCity}}<br>
+        {{partner.PartnerCountry}}
+      </span>
+    </div>
+  </script>
+
+    <script type="text/x-template" id="tpl-order-history-details">
+    <div class="oh-details">
+      <h4>OH Details</h4>
+      <order-history-details-summary :order="order"/>
+
+      <v-container v-if="order.SalesOrderNumber">
+        <v-row>
+          <v-col>
+            <order-history-details-partner headline="Placed by" :partner="placedBy" is-name-only/>
+            <order-history-details-partner class="mt-6" headline="Shipped to" :partner="shippedTo"/>
+          </v-col>
+          <v-col>
+            PRICING
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <p v-if="!order.SalesOrderNumber">Loading ...</p>
+
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header>JSON Data</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <pre>{{ order }}</pre>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
+      <div class="mixin-and-slot-example">
+        <button @click="toggle" :style="statusStyle">(<span v-if="show">AN</span><span v-if="!show">AUS</span>)</button>
+        <greeting name="Fabian">
+          Hello
+          <template #aftername>!!!</template>
+        </greeting>
+        <small>mixin-and-slot-example</small>
+      </div>
+
+    </div>
+  </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <script>
+
+        const HELPER = {
+            debounce: function (fn, delay) {
+                var timeoutID = null
+                return function () {
+                    clearTimeout(timeoutID)
+                    var args = arguments
+                    var that = this
+                    timeoutID = setTimeout(function () {
+                        fn.apply(that, args)
+                    }, delay)
+                }
+            },
+            leadingZero: function (value, digits = 2) {
+                const vStr = new String(value);
+                const lengthDiff = digits - vStr.length;
+                return lengthDiff > 0 ? Array.apply(null, Array(lengthDiff)).map(() => { return '0' }).join('') + value : value;
+            },
+            updateObservedObject: function (stateObj, updateObj) {
+                const updateableAttributes = Object.keys(updateObj)
+                for (let i = 0; i < updateableAttributes.length; i++) {
+                    const attribute = updateableAttributes[i]
+                    stateObj[attribute] = updateObj[attribute]
+                }
+            }
+        }
+
+        const OrderHistoryService = {
+            loadDetails(config = {}) {
+                // return new Promise((resolve, reject) => {
+                //     setTimeout(resolve, 1000)
+                // })
+                return fetch(`/mock/order-history/details.json`).then(response => {
+                    return response.json().then(json => {
+                        return json.d.results.length > 0 ? json.d.results[0] : {};
+                    });
+                })
+            },
+        }
+
+        const storeLogPlugin = store => {
+            // called when the store is initialized
+            store.subscribe((mutation, state) => {
+                // called after every mutation.
+                // The mutation comes in the format of `{ type, payload }`.
+                console.group('Store log');
+                console.log(mutation);
+                console.log(state);
+                console.groupEnd('Store log');
+            })
+        }
+
+        const counter = {
+            namespaced: true,
+            state: {
+                count: 0,
+            },
+            // getters: {
+            //     count: state => state.count,
+            // },
+            actions: {
+                increment(context, value) {
+                    context.commit('increment', { timestamp: new Date().getTime(), setterValue: value })
+                },
+                reset(context) {
+                    context.commit('reset')
+                }
+            },
+            mutations: {
+                increment(state, data) {
+                    state.count++
+                },
+                reset(state) {
+                    state.count = 0
+                },
+            }
+        }
+
+        const order = {
+            namespaced: true,
+            state: {
+                orderHistory: {},
+                orderId: null,
+                soldTo: null
+            },
+            getters: {
+                id: state => state.orderId,
+                order: state => state.orderHistory,
+                orderHistoryPlacedBy: state => (state.orderHistory && state.orderHistory.PartnerSet) ? state.orderHistory.PartnerSet.results.filter(partner => partner.PartnerRoll === 'AP')[0] : {},
+                orderHistoryShippedTo: state => (state.orderHistory && state.orderHistory.PartnerSet) ? state.orderHistory.PartnerSet.results.filter(partner => partner.PartnerRoll === 'WE')[0] : {},
+                orderHistorySummary: state => {
+                    return ['CustomerOrderID', 'SalesOrderNumber', 'OrderDate', 'OrderStatus'].map(key => {
+                        return { key, value: state.orderHistory[key] }
+                    })
+                }
+            },
+            actions: {
+                initialize({ commit, state }, messages = {}) {
+                    // commit('setMessages', messages)
+                    commit('setOrderId', '8aa9de1cf2a7c51815b1ca7592bc6315')
+                    commit('setSoldTo', '0021000003')
+                },
+                loadOrderHistory({ commit, state }) {
+                    const orderid = state.orderId
+                    const soldto = state.soldTo
+
+                    OrderHistoryService.loadDetails({ orderid, soldto }).then(order => {
+                        commit('setOrderHistory', order)
+                    }).catch(error => console.error(error));
+                },
+                setOrderId({ commit, state }, orderId) {
+                    commit('setOrderId', orderId)
+                },
+            },
+            mutations: {
+                setOrderHistory(state, data) {
+                    state.orderHistory = data
+                },
+                setOrderId(state, orderId) {
+                    state.orderId = orderId
+                },
+                setSoldTo(state, soldTo) {
+                    state.soldTo = soldTo
+                },
+            }
+        }
+
+        const store = new Vuex.Store({
+            modules: {
+                counter,
+                order
+            },
+            strict: true, // In strict mode, whenever Vuex state is mutated outside of mutation handlers, an error will be thrown
+            plugins: [storeLogPlugin]
+        })
+
+        Vue.directive('focus', {
+            inserted: function (el) {
+                el.focus()
+            }
+        })
+
+        Vue.filter('formatDate', (value) => {
+            if (typeof value !== 'string') return value;
+
+            const MINIMAL_DATE = new Date('2000-01-01').getTime()
+            const cleanedValue = parseInt(value.replace(/\/Date\((.*)\)\//, "$1"));
+            if (cleanedValue > MINIMAL_DATE) {
+                const date = new Date(cleanedValue);
+                return [HELPER.leadingZero(date.getDay()), HELPER.leadingZero(date.getMonth() + 1), date.getFullYear()].join('.');
+            } else {
+                return value;
+            }
+        })
+
+        const toggleMixin = {
+            data() {
+                return {
+                    show: false,
+                }
+            },
+            created() {
+                console.log("Hello from TOGGLE MIXIN!")
+                this.show = true
+            },
+            computed: {
+                statusStyle() {
+                    return {
+                        color: this.show ? 'green' : 'red'
+                    }
+                }
+            },
+            methods: {
+                toggle() {
+                    this.show = !this.show
+                }
+            }
+        }
+
+        // Vue.mixin('toggleMixin', toggleMixin) // global definition...
+
+        // route components
+        const Bar = { template: '<div>bar</div>' }
+        const Foo = { template: '<div>foo</div>' }
+        const User = {
+            template: '<div>User {{ $route.params.id }}</div>'
+        }
+
+        const router = new VueRouter({
+            routes: [
+                { // beforeEnter: (to, from, next) => {}, // Per-Route Guard, In-Component Guards
+                    path: '/foo', component: Foo
+                },
+                { path: '/bar', component: Bar },
+                { path: '/user/:id', component: User }
+            ]
+        })
+        // router.beforeEach((to, from, next) => { }) // navigation guards
+
+        const greetingComponent = {
+            props: ['name'],
+            // see also "scoped slots" for usage of child component data inside of parent components
+            template: `<span class="greeting"><slot>Hi </slot> {{ name }}<slot name="aftername">...</slot></span>`
+        }
+        Vue.component('greeting', greetingComponent)
+
+        Vue.component('order-history-details-summary', {
+            props: ['order'],
+            template: '#tpl-order-history-details-summary',
+            data() {
+                return {
+                    group: 'summary',
+                    orderId: 0
+                }
+            },
+            computed: {
+                ...Vuex.mapGetters({
+                    summary: 'order/orderHistorySummary',
+                }),
+            },
+            filters: {
+                capitalize: function (value) {
+                    if (!value) return ''
+                    value = value.toString()
+                    return value.charAt(0).toUpperCase() + value.slice(1)
+                }
+            },
+            directives: {
+                debounce: {
+                    bind: function (el, binding, vnode) {
+                        // console.log('BIND directive', binding.name, binding.arg, binding.modifiers, binding.value)
+                        // console.log(vnode.data.directives, vnode.context)
+                        const debounceRate = parseInt(binding.arg) || 500
+                        const debounceMethod = binding.value || function () { }
+
+                        // vnode.context.$root.$emit(EVENT_TOGGLE, target)
+                        // const modelName = vnode.data.directives.find((o) => o.name === 'model').expression
+                        // el.oninput = debounce(function (ev) {
+                        //     console.log(ev.target.value, modelName, vnode.context[modelName])
+                        //     vnode.context[modelName] = ev.target.value
+                        //     el.dispatchEvent(new Event('change'))
+                        // }, debounceRate)
+                        el.oninput = HELPER.debounce(debounceMethod, debounceRate)
+                    }
+                }
+            },
+            methods: {
+                setOrderId: function () {
+                    // this.$store.dispatch('order/setOrderId', this.orderId)
+                },
+            }
+        })
+
+        Vue.component('order-history-details-partner', {
+            props: {
+                headline: String,
+                partner: Object,
+                isNameOnly: Boolean,
+            },
+            template: '#tpl-order-history-details-partner',
+        })
+
+        Vue.component('order-history-details', {
+            props: ['order', 'placedBy', 'shippedTo'],
+            mixins: [toggleMixin], // local definition of mixins
+            template: '#tpl-order-history-details'
+        })
+
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            props: {
+                messages: {
+                    type: Object,
+                    default: function () { // Object or array defaults must be returned from a factory function
+                        return {}
+                    }
+                },
+            },
+            data() {
+                return {
+                    alert: true,
+                    dismissSecs: 10,
+                    dismissCountDown: 0,
+                    showDismissibleAlert: false,
+                    modalTitle: '',
+                    modalText: ''
+                }
+            },
+            computed: {
+                ...Vuex.mapGetters({
+                    order: 'order/order',
+                    placedBy: 'order/orderHistoryPlacedBy',
+                    shippedTo: 'order/orderHistoryShippedTo',
+                }),
+                count: {
+                    get: function () { return this.$store.state.counter.count },
+                    set: function (value) { this.$store.dispatch('counter/increment', value); }
+                },
+            },
+            created: function () {
+                this.$store.dispatch('order/initialize', this.messages);
+                this.loadData();
+            },
+            methods: {
+                confirmAction: function () {
+                    this.showDismissibleAlert = true;
+                    this.count += 1;
+                },
+                countDownChanged: function (dismissCountDown) {
+                    this.dismissCountDown = dismissCountDown;
+                },
+                loadData: function () {
+                    this.$store.dispatch('order/loadOrderHistory');
+                },
+                readBarcode: function () {
+                    // https://paul.kinlan.me/barcode-detection/
+                    // https://paul.kinlan.me/detecting-text-in-an-image/
+                    // needs experimental features: chrome://flags/#enable-experimental-web-platform-features
+                    var image = document.querySelector('[rel=js-barcode]');
+                    var barcodeDetector = new BarcodeDetector();
+                    barcodeDetector.detect(image).then(barcodes => {
+                        barcodes.forEach(barcode => {
+                            this.modalTitle = 'Barcode gefunden';
+                            this.modalText = `Im Barcode wurde erkannt: ${barcode.rawValue}`;
+                            const ut = new SpeechSynthesisUtterance(`Im Barcode wurde erkannt: ${barcode.rawValue}`);
+                            speechSynthesis.speak(ut);
+                        })
+                    }).catch((e) => {
+                        console.error("Boo, BarcodeDetection failed: " + e);
+                    });
+                },
+                showAlert: function () {
+                    this.dismissCountDown = this.dismissSecs
+                }
+            },
+            // mixins: [toggleMixin], // local definition of mixins
+            router,
+            store
+        })
+
+        new Vue({
+            el: '#appart',
+            computed: {
+                count: {
+                    get: function () { return this.$store.state.counter.count },
+                    set: function (value) { this.$store.dispatch('counter/increment', value); }
+                }
+            },
+            methods: {
+
+            },
+            store
+        })
+
+        new Vue({
+            el: '#approute',
+            router,
+            data() {
+                console.log('route params', this.$route.params)
+                return {
+                    hi: 'Hi'
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
