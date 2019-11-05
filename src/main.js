@@ -1,4 +1,4 @@
-const app = async function main() {
+const runBundle = async function main() {
   // JS for button
   const button = window.document.querySelector("[rel=js-click-button]");
 
@@ -7,4 +7,6 @@ const app = async function main() {
   });
 };
 
-export default app;
+runBundle();
+
+// export default runBundle;

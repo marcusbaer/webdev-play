@@ -1,4 +1,4 @@
-const CACHE = "play-v190926";
+const CACHE = "play-v191105";
 
 self.addEventListener("install", function(event) {
   event.waitUntil(
@@ -10,8 +10,10 @@ self.addEventListener("install", function(event) {
         // cache resources that are required directly
         "https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css",
         "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js",
-        "https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.esm.browser.js"
-        // '/modules/tpl/App.html',
+        "https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.esm.browser.js",
+        "https://cdn.jsdelivr.net/npm/vue-custom-element@3.2.10/dist/vue-custom-element.esm.min.js",
+        "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"
+        // '/modules/components/App/App.html',
       ]);
     })
   );
@@ -25,7 +27,7 @@ self.addEventListener("fetch", function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
       if (
-        event.request.url.indexOf("tpl/") > 0 &&
+        event.request.url.indexOf("components/") > 0 &&
         event.request.url.endsWith(".html")
       ) {
         // convert templates for Vue

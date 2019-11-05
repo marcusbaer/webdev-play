@@ -1,11 +1,11 @@
 // https://salomvary.com/es6-modules-in-browsers.html
 // https://www.jsdelivr.com/
 
-import { Vue, Vuex } from "./vendor.js";
+import { Vue, Vuex } from "../../vendor.js";
 // import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js'
-import { PersonsService } from "./services.js";
-import Letter, { E } from "./letter.mjs";
-import AppTemplate from "./tpl/App.html";
+import { PersonsService } from "../../services.js";
+import Letter, { E } from "../../lib/letter.mjs";
+import AppTemplate from "./App.html";
 
 export function App(el = "body", initialPersonsList = []) {
   performance.mark("app-start");
