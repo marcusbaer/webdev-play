@@ -1,0 +1,10 @@
+<div
+  v-pointer="active"
+  class="r-label p-2"
+  :class="labelTypeClass"
+  style="width: 100%"
+  :style="statusStyle"
+  @click="toggle"
+>
+  <slot>MISSING LABEL</slot>
+</div>

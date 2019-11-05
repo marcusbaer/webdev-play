@@ -66,7 +66,7 @@ export function App(el = "body", initialPersonsList = []) {
 
   Vue.filter("uppercase", uppercaseFilter);
 
-  const toggleMixin = {
+  const toggleShowMixin = {
     data() {
       return {
         show: false
@@ -90,19 +90,9 @@ export function App(el = "body", initialPersonsList = []) {
   };
   // Vue.mixin('toggleMixin', toggleMixin) // global definition...
 
-  Vue.directive("pointer", {
-    bind(el, binding, vnode) {
-      el.style.cursor = "pointer";
-    },
-    componentUpdated(el, binding, vnode) {
-      el.style.fontStyle = binding.value ? "italic" : "normal";
-      // el.style.fontStyle = vnode.context.show ? 'normal' : 'italic'
-    }
-  });
-
   return new Vue({
     el,
-    mixins: [toggleMixin],
+    mixins: [toggleShowMixin],
     store,
     template: AppTemplate,
     // props: ['persons'],
