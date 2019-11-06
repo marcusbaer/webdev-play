@@ -1,4 +1,4 @@
-const CACHE = "play-v191105";
+const CACHE = "play-v191106";
 
 self.addEventListener("install", function(event) {
   event.waitUntil(
@@ -12,7 +12,8 @@ self.addEventListener("install", function(event) {
         "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.min.js",
         "https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.esm.browser.js",
         "https://cdn.jsdelivr.net/npm/vue-custom-element@3.2.10/dist/vue-custom-element.esm.min.js",
-        "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"
+        "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js",
+        "https://unpkg.com/bootstrap-vue@latest/esm/index.js"
         // '/modules/components/App/App.html',
       ]);
     })
@@ -52,6 +53,23 @@ self.addEventListener("fetch", function(event) {
               });
             })
         );
+        // } else if (
+        //   event.request.url.indexOf("bootstrap-vue") > 0 &&
+        //   event.request.url.indexOf("esm/") > 0 &&
+        //   !event.request.url.endsWith(".js")
+        // ) {
+        //   return (
+        //     response ||
+        //     fetch(
+        //       new Request(event.request.url + "/index.js", {
+        //         method: event.request.method,
+        //         headers: event.request.headers,
+        //         // mode: "same-origin", // need to set this properly
+        //         credentials: event.request.credentials
+        //         // redirect: "manual" // let browser handle redirects
+        //       })
+        //     )
+        //   );
       } else {
         return response || fetch(event.request);
       }

@@ -4,6 +4,10 @@ export {
 export {
   default as Vuex
 } from "https://cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.esm.browser.js";
+// export {
+//   default as BootstrapVue
+// } from "https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.esm.js";
+// } from "https://unpkg.com/bootstrap-vue@latest/esm/index.js";
 export {
   default as vueCustomElement
 } from "https://cdn.jsdelivr.net/npm/vue-custom-element@3.2.10/dist/vue-custom-element.esm.min.js"; // https://alligator.io/vuejs/custom-elements/

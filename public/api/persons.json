@@ -1,11 +1,26 @@
 {
-    "errors": [],
-    "warnings": [
-        { "code": "USED_MOCK_DATA", "message": "Used person is mocked data only" },
-        { "code": "USED_MOCK_DATA", "message": "Used person is mocked data only" }
-    ],
-    "result": [
-        {"type": "adult", "name": "Bernd", "age": 36, "email": "bernd@family.com", "phone": "+49 733 48943 448", "children": ["Emilia"], "citation": "Wir sind so froh, dass wir noch ein E bekommen haben."},
-        {"type": "child", "name": "Emilia", "age": 8, "email": "emilia@family.com", "favorite": "Teddy", "citation": "Ohne das E hätte ich nie reden gelernt. Mein Name würde auch nicht funktionieren."}
-    ]
+  "errors": [],
+  "warnings": [
+    { "code": "USED_MOCK_DATA", "message": "Used person is mocked data only" },
+    { "code": "USED_MOCK_DATA", "message": "Used person is mocked data only" }
+  ],
+  "result": [
+    {
+      "type": "adult",
+      "name": "Bernd",
+      "age": 36,
+      "email": "bernd@gmx.com",
+      "phone": "+49 733 48943 448",
+      "children": ["Emilia"],
+      "citation": "Wir sind so froh, dass wir noch ein E bekommen haben."
+    },
+    {
+      "type": "child",
+      "name": "Emilia",
+      "age": 8,
+      "email": "emilia@hotmail.com",
+      "favorite": "Teddy",
+      "citation": "Ohne das E hätte ich nie reden gelernt. Mein Name würde auch nicht funktionieren."
+    }
+  ]
 }
