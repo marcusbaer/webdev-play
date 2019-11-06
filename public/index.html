@@ -15,6 +15,10 @@
       <link rel="stylesheet" type="text/css" media="screen" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
       <link rel="stylesheet" type="text/css" media="screen" href="./global.css" />
       <link rel="stylesheet" type="text/css" media="screen" href="./bundle.css" />
+
+      <style>
+        template { display: none; }
+      </style>
   </head>
 
   <body class="whitespace-normal">
@@ -82,17 +86,31 @@
     </div>
 
     <div rel="js-bv-block" class="container mx-auto">
-      <div class="flex mt-8">
 
+      <!-- https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots -->
+      <!-- <template id="my-paragraph">
+        <style>
+          p {
+            color: white;
+            background-color: #666;
+            padding: 5px;
+          }
+        </style>
+        <p>My paragraph</p>
+      </template> -->
+
+      <div class="flex mt-8 mx-2">
         <b-card title="Card Title" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top tag="article"
           style="max-width: 20rem;" class="mb-2">
           <b-card-text>
             Some quick example text to build on the card title and make up the bulk of the card's content.
+
+            <!-- <my-paragraph></my-paragraph> -->
+            <hello-component name="r10"></hello-component>
           </b-card-text>
         
           <b-button href="#" variant="secondary">{{ button }}</b-button>
         </b-card>
-
       </div>
     </div>
 
@@ -113,6 +131,56 @@
           };
         }
       });
+    </script>
+
+    <script>
+      // https://jaxenter.de/web-components-einstieg-polymer-83925
+      class HelloComponent extends HTMLElement {
+        static get observedAttributes() {
+          //observe the name attribute
+          return ['name'];
+        }
+
+        constructor() {
+          //called for every hello-component tag
+          super();
+          // this.attachShadow({mode: 'open'});
+        }
+
+        connectedCallback() {
+          //called when the component is attached to the dom
+          this.render();
+          // this.shadowRoot.querySelector('h1').style.color = 'red';
+        }
+
+        disconnectedCallback() {
+          //called when component gets removed from the dom
+        }
+
+        attributeChangedCallback(name, oldVal, newVal) {
+          //called initially and whenever the name attribute changes
+          if (name === 'name' && oldVal && oldVal !== newVal) {
+            this.render();
+          }
+        }
+
+        render() {
+          const name = this.getAttribute('name');
+          this.innerHTML = `
+            <h1>Hello from the WEB COMPONENT ${name}.</h1>
+          `;
+        }
+      }
+
+      //register the hello-component
+      customElements.define('hello-component', HelloComponent);
+
+      //simulate attribute change after 1 second
+      setTimeout(() => {
+        document
+          .querySelector('hello-component')
+          .setAttribute('name', 'r20');
+      }, 1000);
     </script>
   </body>
 </html>
