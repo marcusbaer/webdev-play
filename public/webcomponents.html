@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>Index - Web.Dev Play</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    />
+
+    <!--
+      https://blog.codecentric.de/2018/10/ein-blick-auf-web-components/
+      https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots
+      https://jaxenter.de/web-components-einstieg-polymer-83925
+      https://blog.bitsrc.io/web-components-without-a-framework-lets-build-a-modal-a450a4536340
+      https://innfactory.de/softwareentwicklung/web-components-das-ende-vom-javascript-framework-dschungel/
+      https://stenciljs.com/ (siehe Artikel bei innfactory.de)
+-->
+
+    <style>
+      p:hover {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body class="whitespace-normal">
+    <template id="special-styled-paragraph">
+      <style>
+        h1 {
+          display: none;
+        }
+        p {
+          color: red;
+          background-color: #999;
+          padding: 5px;
+        }
+      </style>
+      <h1></h1>
+      <p>
+        <slot></slot>
+      </p>
+      <slot name="bottom"></slot>
+    </template>
+
+    <div class="container mx-auto px-4">
+      <div class="flex">
+        <special-styled-paragraph title="Have a title">
+          Content of a special styled paragraph.
+          <!-- <p slot="bottom">Plinko</p> -->
+        </special-styled-paragraph>
+      </div>
+      <div class="flex">
+        <hello-component name="r10"></hello-component>
+      </div>
+      <div class="flex">
+        <p>This is a normal copy text.</p>
+      </div>
+    </div>
+
+    <script id="SpecialStyledParagraph">
+      class SpecialStyledParagraph extends HTMLElement {
+        static get observedAttributes() {
+          return ["title"];
+        }
+
+        constructor() {
+          super();
+          //create shadow dom (open mode)
+          // mode specifies whether the functionalities will be available to external JavaScript files
+          this.attachShadow({ mode: "open" });
+        }
+
+        connectedCallback() {
+          this.render();
+        }
+
+        attributeChangedCallback(name, oldVal, newVal) {
+          if (name === "title" && oldVal && oldVal !== newVal) {
+            this.render();
+          }
+        }
+
+        render() {
+          const title = this.getAttribute("title");
+          this.shadowRoot.appendChild(
+            document
+              .querySelector("#special-styled-paragraph")
+              .content.cloneNode(true)
+          );
+          const headline = this.shadowRoot.querySelector("h1");
+          headline.innerHTML = title || "";
+          headline.style.display = title ? "block" : "none";
+        }
+      }
+
+      //register the hello-component
+      customElements.define("special-styled-paragraph", SpecialStyledParagraph);
+    </script>
+
+    <script id="HelloComponent">
+      class HelloComponent extends HTMLElement {
+        static get observedAttributes() {
+          //observe the name attribute
+          return ["name"];
+        }
+
+        constructor() {
+          //called for every hello-component tag
+          super();
+          // this.attachShadow({ mode: "open" });
+        }
+
+        connectedCallback() {
+          //called when the component is attached to the dom
+          this.render();
+          // this.shadowRoot.querySelector('h1').style.color = 'red';
+        }
+
+        disconnectedCallback() {
+          //called when component gets removed from the dom
+        }
+
+        attributeChangedCallback(name, oldVal, newVal) {
+          //called initially and whenever the name attribute changes
+          if (name === "name" && oldVal && oldVal !== newVal) {
+            this.render();
+          }
+        }
+
+        adoptedCallback() {
+          //called when element will be moved into another dom
+        }
+
+        render() {
+          const name = this.getAttribute("name");
+          this.innerHTML = `
+            <h1>Hello from the WEB COMPONENT ${name}.</h1>
+          `;
+        }
+      }
+
+      //register the hello-component
+      customElements.define("hello-component", HelloComponent);
+    </script>
+
+    <script>
+      if ("content" in document.createElement("template")) {
+        //simulate attribute change after 1 second
+        setTimeout(() => {
+          document.querySelector("hello-component").setAttribute("name", "r20");
+        }, 1000);
+      } else {
+        document.body.appendChild(
+          document.createTextNode("HTML templates are not supported")
+        );
+      }
+    </script>
+  </body>
+</html>
