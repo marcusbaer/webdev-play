@@ -1,0 +1,66 @@
+.ui-teaser-angebotskueche {
+  color: #22252a;
+  padding: 0;
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif;
+  font-weight: 500;
+  max-width: 400px;
+  overflow: hidden;
+  border: 0.1rem solid #e3e5e8;
+  border-radius: 0.8rem;
+}
+
+.ui-teaser-angebotskueche > * {
+  margin-bottom: 0.8rem;
+}
+
+.ui-teaser-angebotskueche:hover {
+  border-color: #006ab3;
+  -webkit-box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.2);
+}
+
+.ui-teaser-angebotskueche:hover .ui-teaser-angebotskueche__image {
+  transform: scale(1.1);
+}
+
+.ui-teaser-angebotskueche__image {
+  transition: all 225ms ease-out;
+}
+
+.ui-teaser-angebotskueche__headline {
+  color: #393e46;
+  padding: 0 1rem;
+}
+
+.ui-teaser-angebotskueche__prices {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: -1.6rem;
+}
+
+.ui-teaser-angebotskueche__labels {
+  list-style-type: none;
+  margin: 0 0 1rem 0;
+  padding: 0 1rem;
+}
+
+.ui-teaser-angebotskueche__label {
+  color: #9da3af;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.ui-teaser-angebotskueche__link {
+  text-decoration: none;
+}
+.ui-teaser-angebotskueche__price-item {
+  padding-right: 0.8rem;
+}
+
+.ui-teaser-angebotskueche__label > * {
+  display: block;
+}

@@ -1,0 +1,140 @@
+{
+  "teaserList": [
+    {
+      "name": "12790003 - Akazie - Weiß",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000302-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-akazie-weiss",
+      "deprecatedPrice": 2099,
+      "currentPrice": 1499,
+      "savings": "29% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Kühlgefrierkombination"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "B", "style": "--b", "info": "Dunstesse" }
+      ]
+    },
+    {
+      "name": "12790006 - Chilirot - Weiß",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000604-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-chilirot-weiss2",
+      "deprecatedPrice": 2199,
+      "currentPrice": 1599,
+      "savings": "27% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Kühlgefrierkombination"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "B", "style": "--b", "info": "Dunstesse" }
+      ]
+    },
+    {
+      "name": "10390003 - Schwarz - Vintage Eiche",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1039000321-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-schwarz-vintageeiche",
+      "deprecatedPrice": 2499,
+      "currentPrice": 1799,
+      "savings": "28% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Integrierter Kühlschrank"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "D", "style": "--d", "info": "Dunstesse" }
+      ]
+    },
+    {
+      "name": "10390002 - Rot - Grafit",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1039000210-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-wildeiche-anthrazit",
+      "deprecatedPrice": 2399,
+      "currentPrice": 1699,
+      "savings": "29% sparen",
+      "energyLabels": [
+        {
+          "label": "A++",
+          "style": "--a-plus-plus",
+          "info": "Kühlgefrierkombination"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "C", "style": "--c", "info": "Turmdunstabzugshaube" }
+      ]
+    },
+    {
+      "name": "11520055 - Quarzgrau - Avocado",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1152005501-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-quarzgrau-avocado",
+      "deprecatedPrice": 4499,
+      "currentPrice": 3199,
+      "savings": "29% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Integrierter Kühlschrank"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbaubackofen" },
+        { "label": "E", "style": "--e", "info": "Extrabreite Dunstesse" }
+      ]
+    },
+    {
+      "name": "12790003 - Akazie - Weiß",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000302-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-akazie-weiss",
+      "deprecatedPrice": 2099,
+      "currentPrice": 1499,
+      "savings": "29% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Kühlgefrierkombination"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "B", "style": "--b", "info": "Dunstesse" }
+      ]
+    },
+    {
+      "name": "12790006 - Chilirot - Weiß",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000604-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-chilirot-weiss2",
+      "deprecatedPrice": 2199,
+      "currentPrice": 1599,
+      "savings": "27% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Kühlgefrierkombination"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "B", "style": "--b", "info": "Dunstesse" }
+      ]
+    },
+    {
+      "name": "10390003 - Schwarz - Vintage Eiche",
+      "image": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1039000321-teaser.jpg",
+      "url": "https://www.roller.de/kuechen/angebotskueche-schwarz-vintageeiche",
+      "deprecatedPrice": 2499,
+      "currentPrice": 1799,
+      "savings": "28% sparen",
+      "energyLabels": [
+        {
+          "label": "A+",
+          "style": "--a-plus",
+          "info": "Integrierter Kühlschrank"
+        },
+        { "label": "A", "style": "--a", "info": "Elektro-Einbauherd" },
+        { "label": "D", "style": "--d", "info": "Dunstesse" }
+      ]
+    }
+  ]
+}

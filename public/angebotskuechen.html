@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="de">
+  <!-- https://www.roller.de/kuechen/angebotskuechen -->
+  <title>Angebotskuechen POC</title>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- 
+    If you are loading es5 code you will need 
+    custom-elements-es5-loader to make the element work in 
+    es6-capable browsers. 
+        
+    If you are not loading es5 code, you don't need 
+    custom-elements-es5-loader. 
+  -->
+  <!-- 
+  <script src="./path-to/custom-elements-es5-loader.js"></script>
+  -->
+  <script
+    src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"
+    defer
+  ></script>
+
+  <!-- Load component when polyfills are definitely ready -->
+
+  <script type="module">
+    // Take care of cases in which the browser runs this
+    // script before it has finished running
+    // webcomponents-loader.js (e.g. Firefox script execution order)
+
+    var isIE = (navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1);
+    var isEdge = (navigator.userAgent.indexOf("Edge") != -1);
+
+    if (!isIE && !isEdge) {
+      window.WebComponents = window.WebComponents || {
+        waitFor(cb) {
+          addEventListener("WebComponentsReady", cb);
+        },
+      };
+
+      WebComponents.waitFor(async () => {
+        import("./components/demo.js");
+        import("./components/energylabel.js");
+        import("./components/headline.js");
+        import("./components/price.js");
+        import("./components/product-teaser-image.js");
+        import("./components/teaser-angebotskueche.js");
+      });
+    }
+  </script>
+
+<!--
+  <script type="module" src="./components/demo.js"></script>
+  <script type="module" src="./components/energylabel.js"></script>
+  <script type="module" src="./components/headline.js"></script>
+  <script type="module" src="./components/price.js"></script>
+  <script type="module" src="./components/product-teaser-image.js"></script>
+  <script type="module" src="./components/teaser-angebotskueche.js"></script>
+-->
+  
+  <style>
+    /* Critical CSS */
+    @font-face {
+      font-family: dax_otcond_black;
+      src: url(./res/aef72a2024559a0c9c94dddcf775d6e7.woff2) format("woff2"), url(https://www.roller.de/_ui/roller/theme-roller/js/be1887cdb6d1888ecb17f1a36bff781b.woff) format("woff") , url(https://www.roller.de/_ui/roller/theme-roller/js/1d35c614b5bfdc460c038a762a935fea.ttf) format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+21,U+23,U+25,U+2b-39,U+3f,U+41-5a,U+61-7a,U+b2,U+c4,U+d6,U+dc,U+df,U+e4,U+f6,U+fc,U+20ac
+    }
+    
+    @font-face {
+      font-family: dax_otcond_bold;
+      src: url(./res/c350e76f930d9fe0f8503629c7cc585a.woff2) format("woff2"), url(https://www.roller.de/_ui/roller/theme-roller/js/19c3c06830b3720701b025f9de190670.woff) format("woff"), url(https://www.roller.de/_ui/roller/theme-roller/js/51b9703cbbf90b6ca05a1b58e4e85051.ttf) format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap
+    }
+    
+    @font-face {
+      font-family: dax_otcond_regular;
+      src: url(./res/cbf3803910851d49ba3238fddf17e190.woff2) format("woff2"), url(https://www.roller.de/_ui/roller/theme-roller/js/87929ec3f838571d2499ff33f6a7c62f.woff) format("woff"), url(https://www.roller.de/_ui/roller/theme-roller/js/b3e2d839ba691ec1046ba9e74946540b.ttf) format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap
+    }
+
+    html {
+      color: #22252a;
+      font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-size: 10px;
+      line-height: 1.15;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    p {
+      font-size: 1.8rem;
+      line-height: 1.8;
+      margin: 0;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-banner {
+      background-color: #006ab3;
+      box-shadow: 0.2rem 0.2rem 0 rgba(0,0,0,.5);
+      width: fit-content;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .hero-banner.--h1 {
+      background-color: #e2001a;
+      color: white;
+      font-family: dax_otcond_black,BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-size: 4rem;
+      line-height: 2rem;
+      padding: 1.6rem 2rem;
+      transform: rotate(-2deg);
+    }
+
+    .hero-banner.--h2 {
+      color: white;
+      font-family: dax_otcond_black,BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-size: 2.4rem;
+      line-height: 1.6rem;
+      padding: 1.2rem 1.5rem;
+    }
+
+  </style>
+
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+  <script type=module src=./modules/vue-renderer.js></script>
+
+  <link rel="stylesheet" type="text/css" href="components/energylabel.css" />
+  <link rel="stylesheet" type="text/css" href="components/headline.css" />
+  <link rel="stylesheet" type="text/css" href="components/price.css" />
+  <link rel="stylesheet" type="text/css" href="components/product-teaser-image.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="components/teaser-angebotskueche.css"
+  />
+
+  <div class="container-fluid bg-secondary">
+    <div class="row mb-5">
+      <div class="col p-5">
+        <h1 class="ui-headline hero-banner --h1 mx-auto">Angebotsküchen</h1>
+        <h2 class="ui-headline hero-banner --h2 mx-auto mt-n2">Einbauküchen zu starken Preisen</h2>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col col-lg-6 px-2">
+
+        <!-- <roller-speech-input></roller-speech-input> -->
+
+        <roller-demo
+          button="OK"
+          confirmation=" ausgewählt. Diesen Eintrag löschen?"
+          title="Einkäufe"
+          flagged
+          favorites='["Milch","Zucker", "Quark"]'
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000302-teaser.jpg"
+          >
+          <small>Einkaufsliste im eigenen Browser verwalten.</small>
+        </roller-demo>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="vue">
+    <div class="row">
+      <div class="col bg-danger text-white p-3 d-none" :class="{'d-block':loaded}" v-if="loaded && error">{{ error }}</div>
+    </div>
+    <div class="row">
+      <div class="col d-block" :class="{'d-none':loaded}" v-if="!loaded">Lade Küchen...</div>
+    </div>
+    <div class="row" v-if="loaded">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-2 px-2" v-for="kitchen in teaserList" v-bind:key="kitchen.url">
+        <roller-teaser-angebotskueche>
+          <div class="ui-teaser-angebotskueche h-100 mx-auto">
+            <!-- Link and Image -->
+            <roller-product-teaser-image>
+              <div class="ui-product-teaser-image">
+                <a class="ui-teaser-angebotskueche__link ui-product-teaser-image__link" :href="kitchen.url">
+                  <img class="ui-teaser-angebotskueche__image ui-product-teaser-image__image" :src="kitchen.image" alt="" />
+                </a>
+              </div>
+            </roller-product-teaser-image>
+            <!-- Prices -->
+            <div class="ui-teaser-angebotskueche__prices">
+              <div class="ui-teaser-angebotskueche__price-item">
+                <roller-price>
+                  <div class="ui-price --deprecated">
+                    <span class="ui-price__euro">{{ kitchen.deprecatedPrice }}</span>
+                    <span class="ui-price__cents">00</span>
+                  </div>
+                </roller-price>
+              </div>
+              <div class="ui-teaser-angebotskueche__price-item">
+                <roller-price>
+                  <div class="ui-price --special">
+                    <span class="ui-price__discount">{{ kitchen.savings }}</span>
+                    <span class="ui-price__euro">{{ kitchen.currentPrice }}</span>
+                    <span class="ui-price__cents">00</span>
+                  </div>
+                </roller-price>
+              </div>
+            </div>
+            <!-- Product Headline -->
+            <roller-headline>
+              <h3 class="ui-teaser-angebotskueche__headline ui-headline --h3">
+                <a class="ui-teaser-angebotskueche__link ui-headline__link" :href="kitchen.url">{{ kitchen.name }}</a>
+              </h3>
+            </roller-headline>
+            <!-- Energy Labels -->
+            <ul class="ui-teaser-angebotskueche__labels">
+              <li class="ui-teaser-angebotskueche__label" v-for="(item, index) in kitchen.energyLabels" v-bind:key="index">
+                <roller-energylabel>
+                  <div class="ui-energylabel" :class="item.style">{{ item.label }}</div>
+                </roller-energylabel>
+                <div>{{ item.info }}</div>
+              </li>
+            </ul>
+          </div>
+        </roller-teaser-angebotskueche>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATIC VERSION -->
+  <div class="container xd-none">
+    <div class="row">
+      <div class="col">
+        <hr />
+        <h1 class="ui-headline --h1 mt-5">Statische Version</h1>
+        <roller-teaser-angebotskueche>
+          <div class="ui-teaser-angebotskueche mx-auto">
+            <!-- Link and Image -->
+            <roller-product-teaser-image>
+              <div class="ui-product-teaser-image">
+                <a class="ui-teaser-angebotskueche__link ui-product-teaser-image__link"
+                  href="https://www.roller.de/kuechen/angebotskueche-chilirot-weiss2">
+                  <img class="ui-teaser-angebotskueche__image ui-product-teaser-image__image"
+                    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000604-teaser.jpg" alt="" />
+                </a>
+              </div>
+            </roller-product-teaser-image>
+            <!-- Prices -->
+            <div class="ui-teaser-angebotskueche__prices">
+              <div class="ui-teaser-angebotskueche__price-item">
+                <roller-price>
+                  <div class="ui-price --deprecated">
+                    <span class="ui-price__euro">2499</span>
+                    <span class="ui-price__cents">00</span>
+                  </div>
+                </roller-price>
+              </div>
+              <div class="ui-teaser-angebotskueche__price-item">
+                <roller-price>
+                  <div class="ui-price --special">
+                    <span class="ui-price__discount">27% sparen</span>
+                    <span class="ui-price__euro">1599</span>
+                    <span class="ui-price__cents">00</span>
+                  </div>
+                </roller-price>
+              </div>
+            </div>
+            <!-- Product Headline -->
+            <roller-headline>
+              <h3 class="ui-teaser-angebotskueche__headline ui-headline --h3">
+                <a class="ui-teaser-angebotskueche__link ui-headline__link"
+                  href="https://www.roller.de/kuechen/angebotskueche-chilirot-weiss2">12790006 - Chilirot - Weiß</a>
+              </h3>
+            </roller-headline>
+            <!-- Energy Labels -->
+            <ul class="ui-teaser-angebotskueche__labels">
+              <li class="ui-teaser-angebotskueche__label">
+                <roller-energylabel>
+                  <div class="ui-energylabel --a-plus">A+</div>
+                </roller-energylabel>
+                <div>Kühlgefrierkombination</div>
+              </li>
+              <li class="ui-teaser-angebotskueche__label">
+                <roller-energylabel>
+                  <div class="ui-energylabel --a">A</div>
+                </roller-energylabel>
+                <div>Elektro-Einbauherd</div>
+              </li>
+              <li class="ui-teaser-angebotskueche__label">
+                <roller-energylabel>
+                  <div class="ui-energylabel --b">B</div>
+                </roller-energylabel>
+                <div>Dunstesse</div>
+              </li>
+            </ul>
+          </div>
+        </roller-teaser-angebotskueche>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 my-5">
+        <img class="w-100" data-alt="img"
+          alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/header-kuechenform-small.jpg">
+      </div>
+      <div class="col-12 col-md-6 my-5">
+        <h1 class="ui-headline --h1">Mit ROLLER zur Traumküche</h1>
+        <p>
+          Wir sind für Sie da: Im ROLLER Markt ganz in Ihrer Nähe beraten wir Sie gern und helfen Ihnen bei der Planung Ihrer
+          neuen Trend-Küche. Vereinbaren Sie direkt hier online einen Termin mit einem fachkundigen Mitarbeiter vor Ort.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var isIE = (navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1);
+    var isEdge = (navigator.userAgent.indexOf("Edge") != -1);
+    if (isIE || isEdge) {
+      var currentClasses = document.getElementById('vue').className;
+      document.getElementById('vue').className = currentClasses + " d-none"
+    }
+  </script>
+
+  <script>
+    var demoComponent = document.querySelector("roller-demo");
+    demoComponent.addEventListener("button-clicked", e => {
+      // e.detail.event.target = button node inside shadow dom
+      console.log(
+        `%cDemo component - button click received from component`,
+        "color: lightblue; font-style: italic"
+      );
+
+      if (e.target.hasAttribute('flagged')) {
+        e.target.removeAttribute('flagged');
+      } else {
+        e.target.setAttribute('flagged', 'flagged');
+      }
+    });
+  </script>
+
+</html>

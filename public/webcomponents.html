@@ -1,0 +1,55 @@
+<html>
+    <title>Web Components</title>
+    <script type="module" src="./components/demo.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@vanillawc/wc-markdown/index.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+    <style>
+        :root {
+            --primary-color: rgb(0, 224, 26);
+        }
+        roller-demo {
+            --demo-background-color: rgb(0, 224, 26, 33%);
+            --demo-border-width: 3px;
+        }
+        /* fallback styles for offline is simple alignment and spacing without grid */
+        .pt-4 {
+            padding-top: 0.8rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 text-center pt-4">
+                <h1>🌿</h1>
+                <roller-demo
+                    button="OK"
+                    confirmation=" ausgewählt. Diesen Eintrag löschen?"
+                    title="Einkäufe"
+                    favorites='["Milch","Zucker", "Quark"]'
+                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1252/angebotskueche-1279000302-teaser.jpg"
+                    >
+                    <small>Einkaufsliste im eigenen Browser verwalten.</small>
+                </roller-demo>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 text-center pt-4">
+                <h1>📦</h1>
+                <wc-markdown>
+## Inline Markdown
+
+This some sample markdown.
+                </wc-markdown>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 text-center pt-4">
+                <a href="https://www.webcomponents.org/" target="_blank">https://www.webcomponents.org/</a>
+            </div>
+        </div>
+    </div>
+</html>

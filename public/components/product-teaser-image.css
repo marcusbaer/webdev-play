@@ -1,0 +1,9 @@
+.ui-product-teaser-image__image {
+  width: 100%;
+}
+
+.ui-product-teaser-image__link {
+  display: block;
+  width: fit-content;
+  overflow: hidden;
+}
