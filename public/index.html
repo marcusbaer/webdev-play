@@ -1,72 +1,69 @@
-<!doctype html>
-<html lang="de">
+<html>
   <head>
-      <meta charset="utf8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="robots" content="noindex, nofollow">
-      
-      <title>Index - Web.Dev Play</title>
-    	<link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="20;url=./next.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="robots" content="noindex, nofollow">
+    <title>Web.Dev</title>
+    <script src="./vendor/aframe.min.js"></script>
+    <script src="./vendor/aframe-ar.js"></script>
+    <script src="./vendor/aframe-stl-model-component.min.js"></script>
 
-      <link rel="stylesheet" type="text/css" media="screen" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="./global.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="./bundle.css" />
   </head>
+  <body style="margin: 0px; overflow: hidden;">
+    <a-scene embedded arjs="debugUIEnabled: false;">
 
-  <body class="whitespace-normal">
+      <!-- https://poly.google.com/ -->
 
-    <div class="container mx-auto px-4">
-  
-      <div class="flex pb-4 pt-4">
-        <h3 class="text-4xl">Buchstabe E</h3>
-      </div>
+      <a-assets>
+        <a-asset-item id="unic1-obj" src="./poly/dYKPDFscjWu/model.obj"></a-asset-item>
+        <a-asset-item id="unic1-mtl" src="./poly/dYKPDFscjWu/materials.mtl"></a-asset-item>
+        <a-asset-item id="unic2-obj" src="./poly/Unicorn1_obj_aID2tx3KFD1_36XXIqg8j4p/Unicorn1.obj"></a-asset-item>
+        <a-asset-item id="unic2-mtl" src="./poly/Unicorn1_obj_aID2tx3KFD1_36XXIqg8j4p/Unicorn1.mtl"></a-asset-item>
+        <!-- <a-asset-item response-type="arraybuffer" id="zahnrad" src="./openscad/zahnrad.stl"></a-asset-item>
+        <a-asset-item response-type="arraybuffer" id="zahnrad2" src="./openscad/zahnrad2.stl"></a-asset-item> -->
+      </a-assets>
 
-      <div class="md:flex">
-        <div class="md:flex-shrink-0">
-          <img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase">
-        </div>
-        <div class="mt-4 md:mt-0 md:ml-6">
-          <div class="uppercase tracking-wide text-sm text-red-600 font-bold">Top Angebot</div>
-          <a href="#" class="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">Deutschlands meistverkaufter Buchstabe</a>
-          <p class="mt-2 text-gray-600">
-            Als fünfter Buchstabe des deutschen Alphabets reiht sich das E ganz vorn in die Riege der Buchstaben ein.
-            Nicht umsonst bekam es auf Tastaturen einen Top-Platz innerhalb der glorreichen QWERTZ.
-            Kaufen auch Sie ein E und erleben Sie, wie flexibel sich dieser Buchstabe einsetzen lässt!
-          </p>
-        </div>
-      </div>
-    
-      <div class="flex bg-gray-200 mt-8">
-        <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">häufig</div>
-        <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">vielseitig einsetzbar</div>
-        <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">pflegeleicht</div>
-      </div>
+      <a-entity position="0 0 0" visible="false">
+        <!-- <a-sphere radius="0.2" color="yellow"></a-sphere> -->
+        <a-entity scale="2 2 2" position="1 1 0" obj-model="obj: #unic1-obj; mtl: #unic1-mtl"></a-entity>
+        <a-animation attribute="rotation" easing="linear" repeat="indefinite" from="0 0 0" to="0 360 0" dur="8000"></a-animation>
+        <a-animation class="animation-scale" easing="ease-elastic" begin="click" attribute="scale" to="0 0 0" from="2 2 2" direction="alternate" dur="2000"></a-animation>
+        <a-animation class="animation-visible" begin="click" attribute="visible" from="true" to="false" direction="alternate"></a-animation>
+        <!-- <a-animation class="animation-opacity" easing="ease-elastic" begin="click" attribute="opacity" from="1" to="0" direction="alternate"></a-animation> -->
+      </a-entity>
 
-      <div class="flex items-baseline max-w-sm mt-8 mx-auto">
-          <div class="flex-1 text-5xl">3,95 €</div>
-          <div class="flex-1 text-2xl">pro Stück</div>
-        </div>
-      </div>
-  
-      <form action="./checkout.html" class="flex bg-gray-200 mt-8 items-center pb-4 pt-8">
-        <div class="flex-auto text-center px-4 py-2 m-2">
-          Anzahl
-        </div>
+      <a-entity position="0 0 0" visible="false">
+          <!-- <a-sphere radius="0.2" color="yellow"></a-sphere> -->
+          <a-entity scale="1 1 1" rotation="-90 90 0" position="0 1.8 0" obj-model="obj: #unic2-obj; mtl: #unic2-mtl"></a-entity>
+          <a-animation attribute="rotation" easing="linear" repeat="indefinite" from="0 0 0" to="0 360 0" dur="8000"></a-animation>
+          <a-animation class="animation-scale" easing="ease-elastic" begin="click" attribute="scale" from="0 0 0" to="1 1 1" direction="alternate" dur="2000"></a-animation>
+          <a-animation class="animation-visible" begin="click" attribute="visible" from="false" to="true" direction="alternate"></a-animation>
+          <!-- <a-animation class="animation-opacity" easing="ease-elastic" begin="click" attribute="opacity" from="0" to="1" direction="alternate"></a-animation> -->
+          <!-- <a-animation class="animation-position" easing="ease-elastic" begin="click" attribute="position" from="8 0.5 0" to="8 3 0" direction="alternate" dur="2000"></a-animation> -->
+      </a-entity>
 
-        <div class="flex-auto text-gray-700 text-center px-4 py-2 m-2">
-          <input type="number" name="quantity" value="1" class="text-black text-2xl">
-        </div>
-          
-        <div class="flex-auto text-gray-700 text-center px-4 py-2 m-2">
-          <button class="bg-blue-500 hover:bg-blue-700 text-center text-white font-bold py-2 px-4 rounded" rel="js-click-button">
-            Jetzt kaufen
-          </button>
-        </div>
-      </form>
+  	  <a-marker-camera preset="kanji">
+          <a-entity cursor="fuse: true; fuseTimeout: 500">
+            <!-- <a-box cursor-listener position="0 0 0" rotation="0 0 0" scale="0.5 0.5 0.5" color="blue"></a-box> -->
+          </a-entity>
+      </a-marker-camera>
+    </a-scene>
 
-    </div>
+<!--
+  https://aframe.io/blog/arjs/
+  https://github.com/jeromeetienne/ar.js
+  https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf
+  https://codepen.io/jeromeetienne/pen/mRqqzb
 
-    <script src='./bundle.js'></script>
+  Markers:
+  kanji ?
+  hiro https://github.com/jeromeetienne/AR.js/blob/master/data/images/HIRO.jpg
+  http://www.artoolworks.com/support/applications/marker/
+  https://medium.com/arjs/how-to-create-your-own-marker-44becbec1105
+
+  https://playground.babylonjs.com/
+-->
   </body>
 </html>

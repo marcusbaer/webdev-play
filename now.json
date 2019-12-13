@@ -2,9 +2,12 @@
   "version": 2,
   "alias": "webdev-play",
   "builds": [
+    { "src": "public/*.md", "use": "@now/md" },
     { "src": "public/**/*.*", "use": "@now/static" }
   ],
   "routes": [
+    { "src": "/vendor/(.*)", "dest": "public/vendor/$1" },
+    { "src": "/docs/(.*)", "dest": "public/$1.md" },
     { "src": "/", "dest": "public/index.html" },
     { "src": "/(.*)", "dest": "public/$1" }
   ]
