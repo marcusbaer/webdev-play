@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <title>CSS Houdini Playground</title>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script> 
+            // Paint Worklet & Paint API
+            if (!CSS.paintWorklet) {
+                document.body.innerHTML("PaintWorklet not supported by this browser");
+            }
+            CSS.paintWorklet.addModule('checkboardWorklet.js');
+            CSS.paintWorklet.addModule('innerBordersWorklet.js'); 
+            CSS.paintWorklet.addModule('paintWorklet.js');
+
+            if (!CSS.layoutWorklet) {
+                document.body.innerHTML("LayoutWorklet not supported by this browser");
+            }
+            CSS.layoutWorklet.addModule('masonryLayout.js');
+
+            // Custom Properties And Values API
+            CSS.registerProperty({ 
+                name: "--colorPrimary",
+                syntax: "<color>", 
+                inherits: false,
+                initialValue: "blue",
+            });
+        </script>
+        <style>
+            .square { width: 256px; height: 256px; }
+
+            li {
+                /* background-image: paint(mypaint, stroke, 10px); */
+                background-image: paint(checkerboard); 
+                --hilights: blue;
+                --lowlights: green;
+            }
+
+            .exampleElement {
+                /* paintWorkletExample - name of the worklet blue - argument passed to a Worklet */
+                background-image: paint(paintWorketExample, blue);
+                width: 67vw;
+                min-height: 20vh;
+            }
+
+            /* https://css-houdini.rocks/ */
+            .el--1 {
+                background: paint(inner-border, 2px, black, 10px, -2deg),
+                    paint(inner-border, 2px, black, 10px, 0deg),
+                    paint(inner-border, 2px, black, 10px, 3deg),
+                    url(https://picsum.photos/300/300?image=201);
+            }
+
+            .el--2 {
+                background: paint(inner-border, 2px, white, 10px, 0deg),
+                    paint(inner-border, 1px, white, 14px, 0deg),
+                    url(https://picsum.photos/256/256?image=154);
+            }
+
+            .gradientBox { 
+                background: linear-gradient(45deg, rgba(255,255,255,1) 0%, var(--colorPrimary) 60%);
+                transition: --colorPrimary 0.5s ease;
+            }
+            .gradientBox:hover {
+                --colorPrimary: red
+            }
+
+            #masonry {
+                display: layout(masonry);
+                --padding: 8;
+                --columns: 1;
+            }
+
+            @media only screen and (min-width: 375px) {
+                #masonry {
+                    --columns: 2;
+                }
+            }
+
+            @media only screen and (min-width: 768px) {
+                #masonry {
+                    --padding: 16;
+                    --columns: 3;
+                }
+            }
+
+            @media only screen and (min-width: 1024px) {
+                #masonry {
+                    --columns: 4;
+                }
+            }
+
+            #masonry > div {
+                background: #ff0;
+                color: #111;
+                font: 1em sans-serif;
+                padding: 16px;
+            }
+
+            #masonry > div:nth-child(odd) {
+                background: #08c4c4;
+            }
+
+            #masonry .square {
+                background-size: contain;
+                height: auto;
+                margin: 16px 0;
+                padding-top: 100%; /* height = width */
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="gradientBox">
+            <h1>CSS Houdini Playground</h1>
+            <ul>
+                <li>first item</li>
+                <li>second item</li>
+            </ul>
+        </div>
+        <div class="square el--1"></div>
+        <div class="square el--2"></div>
+        <div class="exampleElement"></div>
+        <div id="masonry">
+            <div>1 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret. Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+            <div>2 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+            <div>3 Lorem ipsum dolor sit amet.</div>
+            <div>4 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. <div class="square el--2"></div> Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+            <div>5 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an.</div>
+            <div>6 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea.</div>
+            <div>7 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+            <div>8 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix.</div> <div>9 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea..</div>
+        </div>
+        <script>
+            // https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/
+            
+            // Typed Object Model (Typed OM)
+            const h1 = document.querySelector('h1')
+            console.log(h1.computedStyleMap().get("font-size"))
+
+            h1.attributeStyleMap.set("font-size", CSS.em(2)); // Sets inline style
+            h1.attributeStyleMap.set("color", "rebeccapurple"); // Sets inline style
+
+            // Computed style remains the same (initial value)
+            console.log(h1.computedStyleMap().get("font-size"))
+
+            // Get new inline style
+            console.log(h1.attributeStyleMap.get("font-size"))
+        </script>
+    </body>
+</html>
