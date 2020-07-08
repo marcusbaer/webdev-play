@@ -113,8 +113,15 @@
         <div class="gradientBox">
             <h1>CSS Houdini Playground</h1>
             <ul>
-                <li>first item</li>
-                <li>second item</li>
+                <li>
+                    <a href="https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/">https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/</a>
+                </li>
+                <li>
+                    <a href="https://css-houdini.rocks/">https://css-houdini.rocks/</a>
+                </li>
+                <li>
+                    <a href="https://developers.google.com/web/updates/2018/03/cssom">https://developers.google.com/web/updates/2018/03/cssom</a>
+                </li>
             </ul>
         </div>
         <div class="square el--1"></div>
@@ -142,6 +149,8 @@
 
             // Computed style remains the same (initial value)
             console.log(h1.computedStyleMap().get("font-size"))
+
+            //el.style.opacity += 0.1;
 
             // Get new inline style
             console.log(h1.attributeStyleMap.get("font-size"))
