@@ -1,48 +1,31 @@
 <html>
     <head>
-        <title>CSS Houdini Playground</title>
+        <title>CSS Houdini</title>
         <meta charset="utf8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script> 
-            // Paint Worklet & Paint API
-            if (!CSS.paintWorklet) {
-                document.body.innerHTML("PaintWorklet not supported by this browser");
-            }
-            CSS.paintWorklet.addModule('checkboardWorklet.js');
-            CSS.paintWorklet.addModule('innerBordersWorklet.js'); 
-            CSS.paintWorklet.addModule('paintWorklet.js');
-
-            if (!CSS.layoutWorklet) {
-                document.body.innerHTML("LayoutWorklet not supported by this browser");
-            }
-            CSS.layoutWorklet.addModule('masonryLayout.js');
-
-            // Custom Properties And Values API
-            CSS.registerProperty({ 
-                name: "--colorPrimary",
-                syntax: "<color>", 
-                inherits: false,
-                initialValue: "blue",
-            });
-        </script>
+        
         <style>
+            html { font-size: 1.2em; line-height: 1.8em; padding: 2em; }
+            code { background-color: lightgray; padding: 0.2em; }
+            pre { background-color: lightgray; padding: 0.5em; }
+            .demo { padding: 0.5em; }
             .square { width: 256px; height: 256px; }
+        </style>
+        <style>
+            .exampleElement {
+                background-image: paint(paintWorkletExample, blue);
+            }
 
-            li {
-                /* background-image: paint(mypaint, stroke, 10px); */
+            .exampleElement:hover {
+                --myVariable: red;
+            }
+
+            .checker {
                 background-image: paint(checkerboard); 
                 --hilights: blue;
                 --lowlights: green;
             }
 
-            .exampleElement {
-                /* paintWorkletExample - name of the worklet blue - argument passed to a Worklet */
-                background-image: paint(paintWorketExample, blue);
-                width: 67vw;
-                min-height: 20vh;
-            }
-
-            /* https://css-houdini.rocks/ */
             .el--1 {
                 background: paint(inner-border, 2px, black, 10px, -2deg),
                     paint(inner-border, 2px, black, 10px, 0deg),
@@ -110,37 +93,104 @@
         </style>
     </head>
     <body>
-        <div class="gradientBox">
-            <h1>CSS Houdini Playground</h1>
-            <ul>
-                <li>
-                    <a href="https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/">https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/</a>
-                </li>
-                <li>
-                    <a href="https://css-houdini.rocks/">https://css-houdini.rocks/</a>
-                </li>
-                <li>
-                    <a href="https://developers.google.com/web/updates/2018/03/cssom">https://developers.google.com/web/updates/2018/03/cssom</a>
-                </li>
-            </ul>
-        </div>
-        <div class="square el--1"></div>
-        <div class="square el--2"></div>
-        <div class="exampleElement"></div>
-        <div id="masonry">
-            <div>1 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret. Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
-            <div>2 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
-            <div>3 Lorem ipsum dolor sit amet.</div>
-            <div>4 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. <div class="square el--2"></div> Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
-            <div>5 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an.</div>
-            <div>6 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea.</div>
-            <div>7 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
-            <div>8 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix.</div> <div>9 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea..</div>
-        </div>
+
+        <h1>Houdini</h1> 
+
+        <h2>Problem klassischer CSS Features</h2>
+        
+        <ul>
+           <li>Weg für neue Features (bzw. Verbesserungen) hin zu einer stabilen und vollständig unterstützen Version ist lang</li>
+           <li>JS basierte Polyfills füllen Lücken bei Browserunterstützung</li>
+           <li>Inkonsistenzen und Fehler in Polyfills</li>
+           <li>
+               Polyfills haben Performance-Probleme:
+                <ul>
+                    <li>DOM (Document Object Model, HTML Markup)</li>
+                    <li>CSSOM (CSS Object Model, CSS Markup)</li>
+                    <li>beide Object Trees voneinander unabhängig</li>
+                    <li>JS arbeitet mit DOM und sehr begrenztem Zugriff auf CSSOM</li>
+                </ul>
+           </li>
+           <li>JS Polyfills laufen erst nachdem initiales Rendering beendet ist (d.h. nachdem DOM + CSSOM erstellt und Dokument vollständig geladen wurde) - Polyfill erzwingt Re-Rendering der Seite</li>
+           <li>noch stärkere Performance-Probleme mit requestAnimationFrame oder User-Interaktionen (Scroll-Events etc.)</li>
+           <li>CSS Standards schränken auch selbst ein:
+               <ul>
+                   <li>nur wenige CSS Eigenschaften sind nativ animierbar (CSS kann Farben aber keine Verläufe animieren)</li>
+                   <li>kein fortgeschrittenes CSS unterstützt: Masonry Layout, besondere 3D Effekte oder Animationen, Styling von Select-Elementen</li>
+               </ul>
+           </li>
+        </ul>
+       
+        <h2>Was ist Houdini?</h2>
+        
+        <ul>
+            <li>Houdini ist ein Sammelbegriff für Browser APIs</li>
+            <li>möchte wesentliche Verbesserungen des Web-Entwicklungsprozesses bewirken und zur Entwicklung von CSS Standards im Allgemeinen beitragen</li>
+            <li>FE Entwickler können CSS mit neuen Features durch JS erweitern</li>
+            <li>hängt sich in CSS Rendering Engine und sagt Browser, wie CSS während Renderprozesses angewendet werden soll</li>
+            <li>Entwickler erstellen Prototypen neuer Features, welche leichter standardisiert werden können und in CSS Feature Spezifikationen fließen</li>
+        </ul>
+
+        <ul>
+            <li>wesentlich performanter als Polyfills</li>
+            <li>Browserunterstützung verbessert sich stetig</li>
+            <li>einige APIs bereits einsetzbar</li>
+            <li>guter Zeitpunkt zum Kennenlernen und Experimentieren</li>
+            <li>unterscheidet High-Level APIs und Low-Level APIs</li>
+        </ul>
+
+        <h3>High Level APIs</h3>
+        
+        <ul>
+            <li>sehr nah am Rendering-Prozess des Browsers (style - layout - paint - composite)</li>
+            <li><em><a href="#paint">Paint API</a>:</em> Zugriffsmöglichkeit auf Zeichen-Schritt des Browsers, wo visuelle Eigenschaften festgelegt werden: Farbe, Hintergrund, Rahmen etc.</li>
+            <li><em><a href="#layout">Layout API</a>:</em> Zugriff auf Layout-Rendering, wo Dimensionen, Positionierung und Ausrichtung von Elementen festgelegt wird</li>
+            <li><em>Animation API:</em> Zugriff auf Composite-Rendering, wo Layer auf Screen gezeichnet und animiert werden</li>
+        </ul>
+
+        <h3>Low Level APIs</h3>
+
+        <p>bilden eine Grundlage für High Level APIs, dazu gehören:</p>
+
+        <ul>
+            <li><a href="#tom">Typed Object Model API</a></li>
+            <li><a href="#cp">Custom Properties & Values API</a></li>
+            <li><a href="#font"><strike>Font Metrics API</strike></a></li>
+            <li><a href="#worklets">Worklets</a></li>
+        </ul>
+
+        <h4 id="tom">Typed Object Model API</h4>
+
+        <ul>
+            <li>vor Houdini konnte JS mit CSS nur über String-Repräsentationen des CSS sprechen:<br>
+                <code>el.style.fontSize = newFontSize + 'px' // 20 --> console.log = '20px'</code>
+                <code>el.style.fontSize += 2; // --> '20em2'</code>
+            </li>
+            <li>fehleranfällig, da bestimmte Werte und Einheiten erwartet werden</li>
+            <li>mit Typed OM API bessere Semantik über JS Objects: <code>{ value: 20, unit: "px" }</code></li>
+            <li>Schnittstelle stellt neue Eigenschaften bereit: computedStyleMap, attributeStyleMap</li>
+        </ul>
+        
+        <pre>
+// Get computed styles from stylesheet (initial value)
+selectedElement.computedStyleMap().get("font-size"); // { value: 20, unit: "px"}
+
+// Set inline styles
+selectedElement.attributeStyleMap.set("font-size", CSS.em(2)); // Sets inline style
+selectedElement.attributeStyleMap.set("color", "blue"); // Sets inline style
+
+// Computed style remains the same (initial value)
+selectedElement.computedStyleMap().get("font-size"); // { value: 20, unit: "px"}
+
+// Get new inline style
+selectedElement.attributeStyleMap.get("font-size"); // { value: 2, unit: "em"}
+
+selectedElement.style.opacity += 0.1;
+        </pre>
+        
         <script>
-            // https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/
-            
             // Typed Object Model (Typed OM)
+            console.group('Typed OM');
             const h1 = document.querySelector('h1')
             console.log(h1.computedStyleMap().get("font-size"))
 
@@ -150,10 +200,237 @@
             // Computed style remains the same (initial value)
             console.log(h1.computedStyleMap().get("font-size"))
 
-            //el.style.opacity += 0.1;
-
             // Get new inline style
             console.log(h1.attributeStyleMap.get("font-size"))
+
+            //el.style.opacity += 0.1;
+            console.groupEnd('Typed OM');
         </script>
+
+        <p>Außer <code>get</code> und <code>set</code> auch weitere Methoden: <code>clear</code> (entfernt all inline styles), <code>delete</code> (entfernt spezifische inline Property), <code>has</code> (tested gesetzte Property), <code>append</code> (Wert hinzufügen zu Property mit mehreren Werten) und noch mehr.</p>
+        
+        <h5>Feature Detection</h5>
+        
+        <pre>
+if (el.attributeStyleMap)   { }
+if (el.computedStyleMap)    { }
+        </pre>
+        
+        <h4 id="cp">Custom Properties & Values API</h4>
+        
+        <p>Entwickler können selbst CSS Variablen definieren:</p>
+        
+        <pre>
+CSS.registerProperty({ 
+    name: "--colorPrimary",
+    syntax: "&lt;color&gt;", // &lt;color&gt;, &lt;integer&gt;, &lt;number&gt;, &lt;length&gt;, &lt;percentage&gt;
+    inherits: false, // property inherits its parent’s value
+    initialValue: "blue",
+});
+        </pre>
+
+        <script>
+            // Custom Properties & Values API
+            CSS.registerProperty({ 
+                name: "--colorPrimary",
+                syntax: "<color>", 
+                inherits: false,
+                initialValue: "blue",
+            });
+        </script>
+
+        <p>und anwenden:</p>
+
+        <pre>
+.gradientBox { 
+    background: linear-gradient(45deg, rgba(255,255,255,1) 0%, var(--colorPrimary) 60%);
+    transition: --colorPrimary 0.5s ease;
+}
+
+.gradientBox:hover {
+    --colorPrimary: red;
+}
+        </pre>
+    
+        <ul>
+            <li>Gradient-Transitions versteht der Browser nicht,</li>
+            <li>aber er kann Farbtransitions, weil Custom Property als Farbe (Typ) definiert wurde</li>
+        </ul>
+
+        <div class="demo gradientBox">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </div>
+
+        
+        <h5>Future Implementation der API direkt in CSS</h5>
+        
+        <pre>
+@property --colorPrimary { 
+    syntax: "&lt;color&gt;"; 
+    inherits: false; 
+    initial-value: blue;
+}
+        </pre>
+        
+        <h5>Feature Detection</h5>
+
+        <pre>
+if (CSS.registerProperty)   { }
+        </pre>
+        
+        <h4 id="font">Font Metrics API</h4>
+        
+        <ul>
+            <li>Abmessungen von Text-Elementen bestimmen</li>
+            <li>beeinflussen, wie Text gerendert wird</li>
+            <li>Mehrzeilen-Verhalten, Text-Abschneidungen, ...</li>
+        </ul>
+
+        <ul>
+            <li>sehr frühe Version</li>
+            <li>Spezifikation kann sich noch ändern</li>
+            <li>aktuell quasi nicht möglich</li>
+        </ul>
+
+        <h4 id="worklets">Worklets</h4>
+        
+        <ul>
+            <li>Worklets sind Skripte, die während des Renderings, unabhängig von der JS-Hauptumgebung, laufen</li>
+            <li>Erweiterung für Rendering Engines</li>
+            <li>erlauben Parallelisierung</li>
+            <li>beschränkter Zugriff auf globalen Scope</li>
+            <li>werden bei Bedarf von Rendering Engine aufgerufen</li>
+            <li>nur HTTPS und localhost</li>
+            <li>Houdini erweitert Browser Rendering Engine um:
+                <ul>
+                    <li>Paint Worklet</li>
+                    <li>Layout Worklet</li>
+                    <li>Animation Worklet</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3 id="paint">Paint API</h3> 
+        
+        <ul>
+            <li>mit JS direkt in den Hintergrund, Rahmen oder Inhalt eines Elements malen</li>
+            <li>Paint API verwendet Paint Worklet zum Zeichnen eines Bildes, das dynamisch auf CSS Änderungen reagiert (vgl. Canvas API)</li>
+            <li>Subset der Canvas API verwendet</li>
+        </ul>
+
+        <script> 
+            // Paint Worklet & Paint API
+            if (!CSS.paintWorklet) {
+                document.body.innerHTML("PaintWorklet not supported by this browser");
+            }
+            CSS.paintWorklet.addModule('checkboardWorklet.js');
+            CSS.paintWorklet.addModule('innerBordersWorklet.js'); 
+            CSS.paintWorklet.addModule('paintWorklet.js');
+        </script>
+
+        <pre>
+// Feature detection
+if (!CSS.paintWorklet) {
+    document.body.innerHTML("PaintWorklet not supported by this browser");
+}
+
+// Add a paint worklet
+CSS.paintWorklet.addModule('paintWorklet.js');
+        </pre>
+
+        <p>In <em>paintWorklet.js</em>:</p>
+
+        <pre>
+registerPaint("paintWorkletExample", class {
+    static get inputProperties() {
+        return ["--myVariable"]; // custom props, die Worklet beachten soll
+    }
+    static get inputArguments() {
+        return ["<color>"]; // Argumente aus der paint function
+    }
+    static get contextOptions() {
+        return {alpha: true};
+    }
+
+    paint(ctx, size, properties, args) {
+        /* ... */
+    }
+});
+    </pre>
+
+    <p>Paint API im CSS:</p>
+
+    <pre>
+.exampleElement {
+    background-image: paint(paintWorkletExample, blue);
+    background-image: paint(paintWorkletExample, blue, stroke, 10px);
+    /* ... */
+}
+    </pre>
+
+    <div class="demo exampleElement">
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+    </div>
+
+    <div class="demo checker">
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+    </div>
+
+    <div class="square el--1"></div>
+    <div class="square el--2"></div>
+
+    <h3 id="layout">Layout API</h3>
+
+    <ul>
+        <li>Beeinflussen des Layouts</li>
+        <li>Worklet & API funktionieren ähnlich wie bei Paint</li>
+    </ul>
+
+    <script> 
+        // Layout Worklet & Layout API
+        if (!CSS.layoutWorklet) {
+            document.body.innerHTML("LayoutWorklet not supported by this browser");
+        }
+        CSS.layoutWorklet.addModule('masonryLayout.js');
+    </script>
+
+    <pre> 
+// Feature detection
+if (!CSS.layoutWorklet) {
+    document.body.innerHTML("LayoutWorklet not supported by this browser");
+}
+CSS.layoutWorklet.addModule('masonryLayout.js');
+    </pre>
+
+    <div id="masonry">
+        <div>1 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret. Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+        <div>2 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+        <div>3 Lorem ipsum dolor sit amet.</div>
+        <div>4 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. <div class="square el--2"></div> Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+        <div>5 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an.</div>
+        <div>6 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea.</div>
+        <div>7 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea. Eam saperet fierent luptatum no. Ius ei dicunt detracto elaboraret.</div>
+        <div>8 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix.</div> <div>9 Lorem ipsum dolor sit amet, consul disputando ne his, et vim accumsan ponderum. Rebum deseruisse ex vix. Vix stet honestatis definitionem an, et natum ocurreret cum, semper interpretaris cu mea..</div>
+    </div>
+
+    <h2>Links</h2>
+        
+    <ul>
+        <li><em>Mehr Inspiration holen?</em> - <a href="https://css-houdini.rocks/">https://css-houdini.rocks</a></li>
+        <li><em>Kann ich Houdini schon verwenden?</em> - <a href="https://ishoudinireadyyet.com/">https://ishoudinireadyyet.com</a></li>
+    </ul>
+
+    <!-- 
+        Quellen
+
+        - https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/
+        - https://developer.mozilla.org/en-US/docs/Web/Houdini
+        - https://developers.google.com/web/updates/2016/05/houdini
+        - https://ishoudinireadyyet.com/
+        - https://css-houdini.rocks/
+    -->
+
+    <hr>
+    <p>Web.Dev 2020</p>
     </body>
 </html>
