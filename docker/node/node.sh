@@ -59,7 +59,7 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 # aws ecr get-login | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.us-west-2.amazonaws.com
 # docker push aws_account_id.dkr.ecr.us-west-2.amazonaws.com/webdev-repository
 # aws ecr delete-repository --repository-name webdev-repository --region us-west-2 --force
-
+# https://console.aws.amazon.com/ecs/home#/firstRun
 
 # docker login azure
 # docker context create aci webdevacicontext
