@@ -9,3 +9,20 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 
 # 4. run server on host
 # export PORT=80 && export SERVER_NAME=Host && node server.js
+
+# 5. SSH into container
+# docker ps
+# docker run -it node ls
+# docker exec -it node /bin/sh
+# cd public
+# touch new.html
+# exit
+
+# 6. create image from container
+# docker commit node marcus/node:2.0
+
+# 7. run container from new image
+# docker run --rm -d -it --name node2 -v $(pwd):/usr/src/app -p 80:8080 marcus/node:2.0 npm start
+
+# 8. add to Docker Hub repository
+# docker push marcus/node:2.0
