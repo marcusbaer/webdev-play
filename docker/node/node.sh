@@ -42,4 +42,10 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 
 # deploy to cloud (AWS ECS)
 # https://docs.docker.com/get-started/part2/
+# https://docs.docker.com/engine/context/aci-integration/
 # https://docs.docker.com/engine/context/ecs-integration/
+
+# docker login azure
+# docker context create aci webdevacicontext
+# docker --context webdevacicontext run -p 80:8080 marcus/node:2.0
+# docker --context webdevacicontext run -p 80:80 nginx
