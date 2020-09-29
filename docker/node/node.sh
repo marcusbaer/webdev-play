@@ -55,9 +55,9 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
 # aws ecr create-repository --repository-name webdev-repository --region us-west-2
-# docker tag marcus/node:2.0 079299656623.dkr.ecr.us-west-2.amazonaws.com/webdev-repository/node:2.0
-# aws ecr get-login | docker login --username AWS --password-stdin 079299656623.dkr.ecr.us-west-2.amazonaws.com
-# docker push 079299656623.dkr.ecr.us-west-2.amazonaws.com/webdev-repository
+# docker tag marcus/node:2.0 aws_account_id.dkr.ecr.us-west-2.amazonaws.com/webdev-repository/node:2.0
+# aws ecr get-login | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.us-west-2.amazonaws.com
+# docker push aws_account_id.dkr.ecr.us-west-2.amazonaws.com/webdev-repository
 # aws ecr delete-repository --repository-name webdev-repository --region us-west-2 --force
 
 
