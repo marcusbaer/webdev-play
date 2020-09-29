@@ -1,0 +1,13 @@
+version: '3'
+services:
+    node:
+        # build: .
+        image: 'marcus/node:2.0'
+        ports:
+            - '80:8080'
+        volumes:
+            - './public:/usr/src/app/public'
+        # command: npm run build
+
+volumes:
+    public:

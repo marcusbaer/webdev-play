@@ -45,6 +45,22 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 # https://docs.docker.com/engine/context/aci-integration/
 # https://docs.docker.com/engine/context/ecs-integration/
 
+# AWS ECS
+# Docker not only runs multi-container applications locally, but also enables developers to seamlessly deploy Docker containers on Amazon ECS using a Compose file with the docker compose up command. The following sections contain instructions on how to deploy your Compose application on Amazon ECS.
+# docker context create ecs webdevecscontext
+# docker context ls
+# docker context use webdevecscontext
+# docker-compose up
+# docker-compose down
+
+# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+# aws ecr create-repository --repository-name webdev-repository --region us-west-2
+# docker tag marcus/node:2.0 079299656623.dkr.ecr.us-west-2.amazonaws.com/webdev-repository/node:2.0
+# aws ecr get-login | docker login --username AWS --password-stdin 079299656623.dkr.ecr.us-west-2.amazonaws.com
+# docker push 079299656623.dkr.ecr.us-west-2.amazonaws.com/webdev-repository
+# aws ecr delete-repository --repository-name webdev-repository --region us-west-2 --force
+
+
 # docker login azure
 # docker context create aci webdevacicontext
 # docker --context webdevacicontext run -p 80:8080 marcus/node:2.0
