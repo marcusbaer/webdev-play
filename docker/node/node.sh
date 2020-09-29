@@ -24,5 +24,10 @@ docker run --rm -d -it --name node -v $(pwd):/usr/src/app -p 3000:8080 -e PORT=8
 # 7. run container from new image
 # docker run --rm -d -it --name node2 -v $(pwd):/usr/src/app -p 80:8080 marcus/node:2.0 npm start
 
+# 7a. FAILED TO save volumes inside -> Dockerfile
+
 # 8. add to Docker Hub repository
 # docker push marcus/node:2.0
+
+
+# `docker save` an image or `docker export` a container. This will output a tar file to standard output, so you will like to do something like docker save 'dockerizeit/agent' > dk.agent.latest.tar. Then you can use `docker load` or `docker import` in a different host.
