@@ -1,0 +1,29 @@
+version: '3'
+services:
+    apache:
+        image: 'bitnami/apache:latest'
+        ports:
+            - '80:8080'
+            - '443:8443'
+        volumes:
+            - ./public:/app
+
+    dev:
+        # ports:
+        #     - "3000:3000"
+        build: .
+        volumes:
+            - './public:/usr/src/app/public'
+            - './src:/usr/src/app/src'
+            # - '../../../../design-system:/usr/design-system'
+
+    # deploy:
+    #   build: .
+    #   volumes:
+    #     - "./public:/usr/src/app"
+    #   command: npm run build
+
+volumes:
+    # design-system:
+    public:
+    src:

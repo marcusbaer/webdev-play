@@ -1,0 +1,20 @@
+version: '3'
+services:
+  dev:
+    ports:
+        - "3000:3000"
+    build: .
+    volumes:
+      - "./.storybook:/usr/src/app/.storybook"
+      - "./dist:/usr/src/app/dist"
+      - "./public:/usr/src/app/public"
+      - "./src:/usr/src/app/src"
+      - "./webpack-utils:/usr/src/app/webpack-utils"
+    command: npm run start:legacy
+
+volumes:
+    ".storybook":
+    dist:
+    public:
+    src:
+    "webpack-utils":

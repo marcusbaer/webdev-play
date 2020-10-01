@@ -10,6 +10,9 @@ COPY package.json /usr/src/app/package.json
 COPY server.js /usr/src/app/server.js
 COPY public /usr/src/app/public
 
+RUN cd /usr/src/app && \\
+    npm install
+
 EXPOSE 8080
 
 VOLUME [ "/usr/src/app/public" ]

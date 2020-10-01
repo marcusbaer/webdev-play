@@ -9,6 +9,8 @@ http
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
 
+    console.log(req.url)
+
     if (req.method === 'POST') {
       let data = []
       req.on('data', chunk => {
@@ -28,15 +30,15 @@ http
         res.writeHead(200, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify(post), 'utf-8')
       })
-    } else if (req.url === '/submit') {
-        res.writeHead(302, { 'Location': '/' })
+    } else if (req.url === '/tutorial/submit') {
+        res.writeHead(302, { 'Location': '/tutorial/' })
         res.end()
-    } else if (req.url === '/kill') {
+    } else if (req.url === '/tutorial/kill') {
       res.write(`<h1>You killed me!</h1><p>My name was <em>${name}</em>.</p>`)
       res.end()
       process.exit()
     } else if (req.url.length > 1) {
-      const filePath = './public' + req.url
+      const filePath = './public/tutorial' + req.url
       fs.readFile(filePath, (error, content) => {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
         res.end(content, 'utf-8')
