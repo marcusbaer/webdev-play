@@ -1,0 +1,21 @@
+version: '3'
+services:
+    # apache:
+    #     image: 'bitnami/apache:latest'
+    #     ports:
+    #         - '80:8080'
+    #         - '443:8443'
+    #     volumes:
+    #         - ./public:/app
+
+    node:
+        build: .
+        image: marcus/node-13:1.0
+        ports:
+            - '80:8080'
+        volumes:
+            - './public:/usr/src/app/public'
+        # command: npm run build
+
+volumes:
+    public:
