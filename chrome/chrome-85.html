@@ -1,0 +1,141 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chrome 85</title>
+  </head>
+  <body>
+    <!-- https://developers.google.com/web/updates/2020/08/nic85#css-properties -->
+    <h1>Chrome 85</h1>
+
+    <h2>Content Visibility</h2>
+    <style>
+      .my-class {
+        /* skip the rendering work for that element until it scrolls into the viewport */
+        content-visibility: auto;
+      }
+    </style>
+
+    <h2>@property and CSS variables</h2>
+    <p><a href="https://web.dev/at-property/">https://web.dev/at-property/</a></p>
+    <style>
+      @property --colorPrimary {
+        syntax: '<color>';
+        initial-value: magenta;
+        inherits: false;
+      }
+      @supports (background: paint(something)) {
+        @property --gradPoint {
+          syntax: '<percentage>';
+          inherits: false;
+          initial-value: 40%;
+        }
+      }
+      .cards {
+        display: flex;
+      }
+      .card {
+        background-color: var(--colorPrimary);
+        cursor: pointer;
+        flex: 1 0 25%;
+        padding: 1rem 0;
+        text-align: center;
+        transition: background-color 500ms ease-out 50ms;
+      }
+      .card:hover {
+        --colorPrimary: aquamarine;
+      }
+    </style>
+    <div class="cards">
+      <div class="card">A</div>
+      <div class="card">B</div>
+      <div class="card">C</div>
+      <div class="card">D</div>
+    </div>
+
+    <h2>Get installed related apps</h2>
+    <script>
+      (async () => {
+        const relatedApps = await navigator.getInstalledRelatedApps();
+        relatedApps.forEach((app) => {
+          console.log(app.id, app.platform, app.url);
+        });
+      })()
+    </script>
+
+    <h2><a href="https://developers.google.com/web/updates/2020/08/nic85#app-shortcuts">App Icon Shortcuts</a></h2>
+    <script type="application/json">
+      // manifest.json
+      "shortcuts": [
+      {
+        "name": "Open Play Later",
+        "short_name": "Play Later",
+        "description": "View the list you saved for later",
+        "url": "/play-later",
+        "icons": [
+          { "src": "//play-later.png", "sizes": "192x192" }
+        ]
+      }
+    ]
+    </script>
+
+    <h2>Promise.any</h2>
+    <script>
+    (async () => {
+      try {
+        const first = await Promise.any(arrayOfPromises);
+        console.log(first);
+      } catch (error) {
+        console.log(error.errors);
+      }
+    })()
+    </script>
+
+    <h2>replaceAll</h2>
+    <script>
+      const myName = 'My name is Bond, James Bond.'
+          .replaceAll('Bond', 'Powers')
+          .replace('James', 'Austin');
+      console.log(myName);
+      // My name is Powers, Austin Powers.
+    </script>
+
+    <h2>AppCache removal</h2>
+    <a href="https://developer.mozilla.org/de/docs/Web/HTML/Using_the_application_cache">https://developer.mozilla.org/de/docs/Web/HTML/Using_the_application_cache</a>
+
+    <hr><!-- ###################################### -->
+
+    <h1>Chrome 85 DevTools</h1>
+    <script>
+      class IncreasingCounter {
+        // private fields
+        #count = 0
+        #config = {
+        }
+        get firstResult() {
+          return this.#config.results?.[0]
+        }
+        set firstResult(result) {
+          // optional chaining
+          this.#config.results? this.#config.results.unshift(result): this.#config.results = [result]
+        }
+        get value() {
+          console.log('Getting the current value!');
+          return this.#count;
+        }
+        increment() {
+          this.#count++;
+        }
+      }
+  
+      const counter = new IncreasingCounter();
+      console.log(counter.value, counter.increment(), counter.value)
+      console.log(counter.firstResult)
+      counter.firstResult = { name: 'Bob' }
+      console.log(counter.firstResult)
+      // console.log(counter.#config)
+      // counter.#count; // → SyntaxError
+      // counter.#count = 42; // → SyntaxError
+    </script>
+  </body>
+</html>
+

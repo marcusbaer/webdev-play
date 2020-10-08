@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chrome 86</title>
+  </head>
+  <body>
+    <h1>Chrome 86</h1>
+
+    <h2>File System Access</h2>
+    <p><a href="https://web.dev/file-system-access/">https://web.dev/file-system-access/</a></p>
+    <h3>Old File Handling</h3>
+    <p>
+      <input type="file" onclick="getFileHandle()">
+      <a href="./chrome-86.html" download>Save file</a>
+    </p>
+    <h3>New File Handling</h3>
+    <input class="openfile" type="button" value="Open">
+    <textarea class="contentfile" cols="30" rows="10"></textarea>
+    <script>
+      let fileHandle;
+      const butOpenFile = document.querySelector('.openfile')
+      const textArea = document.querySelector('.contentfile')
+      butOpenFile.addEventListener('click', async () => {
+        // Destructure the one-element array.
+        [fileHandle] = await getFileHandle();
+        // Do something with the file handle.
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        textArea.value = contents;
+      });
+      textArea.addEventListener('blur', async () => {
+        console.log('save changes back to file');
+        saveFile(fileHandle, textArea.value);
+      })
+
+      async function getFileHandle() {
+        const opts = {
+          types: [
+            {
+              description: 'Text Files',
+              accept: {
+                'text/plain': ['.txt', '.text'],
+                'text/html': ['.html', '.htm']
+              }
+            }
+          ]
+        };
+        return await window.showOpenFilePicker(opts);
+      }
+
+      async function saveFile(fileHandle = null, contents = '') {
+        if (!fileHandle) {
+          fileHandle = await window.showSaveFilePicker();
+        }
+        // Create a FileSystemWritableFileStream to write to.
+        const writable = await fileHandle.createWritable();
+        // Write the contents of the file to the stream.
+        await writable.write(contents);
+        // Close the file and write the contents to disk.
+        await writable.close();
+      }
+    </script>
+
+    <h2>Multi-Screen Window Placement API</h2>
+
+    <h2>focus-visible</h2>
+    <style>
+      /* Focusing the button with a keyboard will
+        show a dashed black line. */
+      button:focus-visible {
+        outline: 4px dashed black;
+      }
+
+      /* Focusing the button with a mouse, touch,
+        or stylus will show a subtle drop shadow. */
+      button:focus:not(:focus-visible) {
+        outline: none;
+        box-shadow: 1px 1px 5px rgba(1, 1, 0, .7);
+      }
+    </style>
+    <button>Hello</button>
+
+    <h2>::marker</h2>
+    <style>
+      li::marker {
+        content: '😍';
+      }
+      li:last-child::marker {
+        content: '🤯';
+      }
+    </style>
+    <ul>
+      <li>one</li>
+      <li>two</li>
+    </ul>
+
+    <hr><!-- ###################################### -->
+
+    <h1>Chrome 86 DevTools</h1>
+
+    <h2><a href="https://developers.google.com/web/updates/2020/08/devtools#media-panel">New Media panel</a></h2>
+
+    <h2>Capture node screenshots via Elements panel context menu</h2>
+
+    <h2>Emulate missing local fonts</h2>
+
+    <h2><a href="https://developers.google.com/web/updates/2020/08/devtools#emulate-inactive-users">Emulate inactive users</a></h2>
+    <p><a href="https://web.dev/idle-detection/">https://web.dev/idle-detection/</a></p>
+    <script>
+      (async () => {
+        if ('IdleDetector' in window) {
+
+          console.log('Idle Detector API supported')
+
+          // Make sure 'idle-detection' permission is granted.
+          const state = await IdleDetector.requestPermission();
+          if (state !== 'granted') {
+            // Need to request permission first.
+            return console.log('Idle detection permission not granted.');
+          }
+
+          // Detect idle state changes
+          try {
+            const controller = new AbortController();
+            const signal = controller.signal;
+
+            const idleDetector = new IdleDetector();
+            idleDetector.addEventListener('change', () => {
+              const userState = idleDetector.userState;
+              const screenState = idleDetector.screenState;
+              console.log(`Idle change: ${userState}, ${screenState}.`);
+            });
+
+            await idleDetector.start({
+              threshold: 60000,
+              signal,
+            });
+            console.log('IdleDetector is active.');
+          } catch (err) {
+            // Deal with initialization errors like permission denied,
+            // running outside of top-level frame, etc.
+            console.error(err.name, err.message);
+          }
+        }
+      })()
+    </script>
+
+    <h2>Logical assignment operators</h2>
+    <p>&&=, ||=, and ??=</p>
+
+    <h2>Show coverage summary for filtered items</h2>
+    <p><a href="https://developers.google.com/web/tools/chrome-devtools/coverage">https://developers.google.com/web/tools/chrome-devtools/coverage</a></p>
+    
+    <h2>New frame details view in Application panel</h2>
+
+    <h2>Accessible color suggestion in the Styles pane</h2>
+
+  </body>
+</html>
+

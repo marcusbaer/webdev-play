@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>Chrome Dev Tools</title>
+        <style>
+            img { width: 100%; }
+            p { font-size: 8px; }
+        </style>
+    </head>
+    <body>
+        <img src="sailboat.jpg">
+        <p id='large-paragraph'>
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+            This is large body of text.
+        </p>
+        <hr>
+        <a href="https://wicg.github.io/largest-contentful-paint/">https://wicg.github.io/largest-contentful-paint/</a>
+        <hr>
+    </body>
+</html>
+<script>
+const observer = new PerformanceObserver((list) => {
+  let perfEntries = list.getEntries();
+  let lastEntry = perfEntries[perfEntries.length - 1];
+  // Process the latest candidate for largest contentful paint
+  console.log(lastEntry)
+});
+observer.observe({entryTypes: ['largest-contentful-paint']});
+
+setTimeout(() => {
+    const p = document.createElement('p')
+    for (let i=0; i<50; i++) {
+        p.textContent += 'This is more body text. '
+    }
+    document.body.appendChild(p)
+}, 3000)
+
+</script>
+
+<!-- https://wicg.github.io/largest-contentful-paint/ -->
