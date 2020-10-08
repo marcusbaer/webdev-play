@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="noindex,nofollow">
+        <title>10 modern layouts</title>
+        <style>
+            .blue { background-color: lightblue; }
+            .box { padding: 8px; }
+            .coral { background-color: coral; }
+            .green { background-color: lightgreen; }
+            .parent { border: 1px solid gray; height: 200px; overflow: scroll; resize: both; width: 480px; }
+            .purple { background-color: rgb(198, 155, 202); }
+            .red { background-color: rgb(245, 176, 137); }
+            .yellow { background-color: rgb(233, 211, 115); }
+        </style>
+    </head>
+    <body>
+        <h1>10 modern layouts in one line</h1>
+        <!-- https://www.youtube.com/watch?v=qm0IfG1GyZU -->
+        <!-- 1linelayouts.glitch.me -->
+        <article class="ex01">
+            <h2>Super centered</h2>
+            <div class="parent blue">
+                <div class="box coral" contenteditable>:)</div>
+            </div>
+            <style>
+                .ex01 .parent {
+                    display: grid;
+                    place-items: center;
+                }
+            </style>
+        </article>
+        <article class="ex02">
+            <h2>Deconstructed pancake</h2>
+            <div class="parent">
+                  <div class="box green">1</div>
+                  <div class="box green">2</div>
+                  <div class="box green">3</div>
+            </div>
+            <style>
+                .ex02 .parent {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                .ex02 .box {
+                    flex: 1 1 150px; /* Stretching */
+                    flex: 0 1 150px; /* No stretching */
+                    margin: 4px;
+                }
+            </style>
+        </article>
+        <article class="ex03">
+            <h2>Sidebar Says</h2>
+            <div class="parent">
+                <div class="box yellow" contenteditable>Min: 150px / Max: 25%</div>
+                <div class="box purple" contenteditable>This element takes the second grid position (1fr), meaning it takes up the rest of the remaining space.</div>  
+            </div>
+            <style>
+                .ex03 .parent {
+                    display: grid;
+                    grid-template-columns: minmax(150px, 25%) 1fr;
+                    /* grid-template-columns: minmax(150px, 25%) auto; */
+                }
+            </style>
+        </article>
+        <article class="ex04"> 
+            <h2>Pancake Stack</h2>
+            <div class="parent">
+                <div class="box blue" contenteditable>Header</div>
+                <div class="box red" contenteditable>Main</div>
+                <div class="box purple" contenteditable>Footer</div>
+            </div>
+            <style>
+                .ex04 .parent {
+                    display: grid;
+                    grid-template-rows: auto 1fr auto;
+                }
+            </style>
+        </article>
+        <article class="ex05">
+            <h2>Classic Holy Grail Layout</h2>
+            <div class="parent">
+                <header class="box purple" contenteditable>Header</header>
+                <div class="box left-side blue" contenteditable>Left Sidebar</div>
+                <main class="box coral" contenteditable>Main Content</main>
+                <div class="box right-side yellow" contenteditable>Right Sidebar</div>
+                <footer class="box green" contenteditable>Footer</footer>
+            </div>
+            <style>
+                .ex05 .parent {
+                    display: grid;
+                    grid-template: auto 1fr auto / auto 1fr auto;
+                }
+                .ex05 header {
+                    grid-column: 1 / 4;
+                }
+                .ex05 .left-side {
+                    grid-column: 1 / 2;
+                }
+                .ex05 main {
+                    grid-column: 2 / 3;
+                }
+                .ex05 .right-side {
+                    grid-column: 3 / 4;
+                }
+                .ex05 footer {
+                    grid-column: 1 / 4;
+                }
+            </style>
+        </article>
+        <article class="ex06">
+            <h2>12-Span Grid</h2>
+            <div class="parent">
+                <div class="box span-12 green">Span 12</div>
+                <div class="box span-6 coral">Span 6</div>
+                <div class="box span-4 blue">Span 4</div>
+                <div class="box span-2 yellow">Span 2</div>
+            </div>
+            <style>
+                .ex06 .parent {
+                    display: grid;
+                    grid-template-columns: repeat(12, 1fr);
+                }
+                .ex06 .span-12 {
+                    grid-column: 1 / 13;
+                }
+                .ex06 .span-6 {
+                    grid-column: 1 / 7;
+                }
+                .ex06 .span-4 {
+                    grid-column: 4 / 8 ;
+                }
+                .ex06 .span-2 {
+                    grid-column: 3 / 5;
+                }
+            </style>
+        </article>
+        <article class="ex07">
+            <h2>RAM (Repeat, Auto, Minmax)</h2>
+            <div class="parent">
+                <div class="box coral">1</div>
+                <div class="box purple">2</div>
+                <div class="box blue">3</div>
+                <div class="box green">4</div>
+            </div>
+            <style>
+                .ex07 .parent {
+                    display: grid;
+                    grid-gap: 1rem;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    /* grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); */
+                }
+            </style>
+        </article>
+        <article class="ex08">
+            <h2>Line Up</h2>
+            <div class="parent">
+                <div class="card yellow">
+                    <h3>Title - Card 1</h3>
+                    <p contenteditable>Medium length description with a few more words here.</p>
+                    <div class="visual coral"></div>
+                </div>
+                <div class="card yellow">
+                    <h3>Title - Card 2</h3>
+                    <p contenteditable>Long Description. Lorem ipsum dolor sit, amet consectetur adipsicing elit.</p>
+                    <div class="visual blue"></div>
+                </div>
+                <div class="card yellow">
+                    <h3>Title - Card 3</h3>
+                    <p contenteditable>Short Desciption.</p>
+                    <div class="visual green"></div>
+                </div>
+            </div>
+            <style>
+                .ex08 .parent {
+                    height: auto;
+                    display: grid;
+                    grid-gap: 1rem;
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .ex08 .visual {
+                    height: 100px;
+                    width: 100%;
+                }
+                .ex08 .card {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+                    justify-content: space-between;
+                }
+                .ex08 h3 {
+                    margin: 0;
+                }
+            </style>
+        </article>
+        <article class="ex09">
+            <h2>Clamping My Style</h2>
+            <div class="parent">
+                <div class="card purple">
+                    <h3>Title Here</h3>
+                    <div class="visual yellow"></div>
+                    <p>Descriptive Text. Lorem ipsum dolor sit, amet consectetur adipsicing elit. Sed est error repellat veritatis.</p>
+                </div>
+            </div>
+            <style>
+                .ex09 .parent {
+                    display: grid;
+                    place-items: center;
+                }
+                .ex09 .card {
+                    width: clamp(23ch, 50%, 46ch); /* clamp(<min>, <actual>, <max>) */
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+                }
+                .ex09 .visual {
+                    height: 100px;
+                    width: 100%;
+                }
+                .ex09 h3 {
+                    margin: 4px;
+                }
+            </style>
+        </article>
+        <article class="ex10">
+            <h2>Respect for Aspect</h2>
+            <div class="parent">
+                <div class="card blue">
+                    <h3>Video Title</h3>
+                    <div class="visual green"></div>
+                    <p>Descriptive Text. This demo works in Chromium 84+.</p>
+                </div>
+            </div>
+            <style>
+                .ex10 .parent {
+                    display: grid;
+                    place-items: center;
+                }
+                .ex10 .card {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+                }
+                .ex10 .visual {
+                    aspect-ratio: 16 / 9;
+                }
+                .ex10 h3 {
+                    margin: 4px;
+                }
+            </style>
+        </article>
+        <h1>Source</h1>
+        <p>Have a look at the original demonstration in the video on Youtube here: <a href="https://www.youtube.com/watch?v=qm0IfG1GyZU">https://www.youtube.com/watch?v=qm0IfG1GyZU</a></p>
+    </body>
+</html>
