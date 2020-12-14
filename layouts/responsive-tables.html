@@ -1,0 +1,49 @@
+<html>
+    <!-- https://css-tricks.com/accessible-simple-responsive-tables/ -->
+    <head>
+        <style>
+            td {
+              background: lightblue;
+            }
+
+            @media screen and (max-width: 767px), print {
+                table, tbody, td, th, thead, tr {
+                    display: block;
+                }
+                table td, table th {
+                    width: 100%;
+                }
+                thead {
+                    display: none;
+                }
+                tr {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <th>ONE</th>
+                <th>TWO</th>
+                <th>THREE</th>
+                <th>FOUR</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice</td>
+                    <td>Babette</td>
+                    <td>Celine</td>
+                    <td>Dorothee</td>
+                </tr>
+                <tr>
+                    <td>Anton</td>
+                    <td>Bob</td>
+                    <td>Charles</td>
+                    <td>Duke</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
