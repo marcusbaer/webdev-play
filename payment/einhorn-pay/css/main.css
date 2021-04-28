@@ -19,6 +19,7 @@ nav > ul {
 nav > ul > li {
   flex: 1;
   flex-basis: 33%;
+  line-height: 20px;
   padding: 4px 0;
 }
 
