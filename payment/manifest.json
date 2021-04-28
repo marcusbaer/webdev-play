@@ -1,0 +1,23 @@
+{
+  "name": "EINHORN Shop",
+  "short_name": "🦄 Shop",
+  "orientation": "portrait",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": "/index.html",
+  "description": "Einhorn Shop bietet Förmchen für jede Gelegenheit",
+  "theme_color": "#8E1EA1",
+  "background_color": "#0B9CC9",
+  "shortcuts": [{
+    "name": "EINHORN Pay App",
+    "url": "/einhorn-pay/index.html",
+    "icons": []
+  }]
+}

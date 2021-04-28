@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="robots" content="noindex,nofollow">
+    <title>🦄 Shop</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --col-brand-01: #0B9CC9;
+            --col-brand-02: #8E1EA1;
+            --col-brand-03: #F8F9FD;
+            --lay-space-01: 4px;
+            --lay-space-02: 8px;
+            --lay-space-04: 16px;
+        }
+
+        aside[aria-labelledby="cookie"] { display: none; }
+    </style>
+    <script type="module">
+        import { pwa } from './einhorn-pay/modules/pwa.js';
+        import './einhorn-pay/modules/custom-elements.js';
+        pwa('./shop-sw.js', './');
+    </script>
+    <link rel="stylesheet" href="./einhorn-pay/css/main.css">
+    <link rel="stylesheet" href="./einhorn-pay/css/ui.css">
+</head>
+<body>
+    <header>
+        <nav aria-labelledby="mainmenu">
+            <h2 id="mainmenu" class="sr-only" tabindex="-1">Main Navigation</h2>
+            <ul>
+                <li><a href="./index.html">Startseite</a></li>
+                <li><a href="./warenkorb.html">Warenkorb<dpx-cart badge></dpx-cart></a></li>
+                <li><a href="./einhorn-pay/app.html">Payment App</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main aria-labelledby="maincontent">
+        <h1 id="maincontent" tabindex="-1">Einhorn Shop</h1>
+        <section aria-labelledby="promotions" aria-describedby="promotionsdesc">
+            <h2 id="promotions">Aktuelle Angebote</h2>
+            <p id="promotionsdesc">
+                Diese Produkte haben wir aktuell im Angebot.
+            </p>
+            <dpx-product-list service="./services/promotions.json"></dpx-product-list>
+        </section>
+        <section aria-labelledby="pwa" aria-describedby="pwadesc">
+            <h2 id="pwa">App</h2>
+            <p id="pwadesc">
+                Mit unserer App bleiben Sie immer über die neuesten Angebote informiert. Jetzt schnell installieren!
+            </p>
+            <p style="display: flex;">
+                <button id="installButton" class="button">App installieren</button>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

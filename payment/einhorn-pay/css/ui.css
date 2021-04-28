@@ -1,0 +1,18 @@
+:is(.button, input[type=submit]) {
+  border: 2px solid var(--col-primary);
+  color: inherit;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.button--primary {
+  background-color: var(--col-primary);
+  color: var(--col-primary-contrast);
+  display: block;
+}
+
+.button:hover {
+  text-decoration: underline;
+}

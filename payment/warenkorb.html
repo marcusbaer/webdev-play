@@ -1,0 +1,27 @@
+<h1 id="maincontent" tabindex="-1">Warenkorb</h1>
+<form action="/cart/order" method="POST" id="order">
+    <dpx-cart list="[]"></dpx-cart>
+    <input type="submit" id="submitorder" value="Kostenpflichtig bestellen">
+</form>
+<script type="module">
+    import { payment } from './einhorn-pay/modules/pwa.js'
+
+    const orderFormNode = document.querySelector('#order input[type=submit]');
+    const cartNode = document.querySelector('main dpx-cart');
+
+    orderFormNode.addEventListener('click', (ev) => {
+
+        ev.preventDefault();
+
+        payment(cartNode.total, cartNode.sumOfTaxes).then(paymentResponse => {
+            const isOrderPaid = paymentResponse.details.status === 'paid' && paymentResponse.details.total == cartNode.total;
+            console.log(paymentResponse);
+
+            if (isOrderPaid) {
+                ev.target.parentNode.submit();
+            }
+        }).catch(errorMessage => {
+            console.warn(errorMessage);
+        });
+    });
+</script>

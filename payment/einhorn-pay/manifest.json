@@ -1,0 +1,26 @@
+{
+  "name": "Pay with EINHORN Pay",
+  "short_name": "EINHORN Pay",
+  "display": "standalone",
+  "start_url": "./app.html",
+  "description": "web payment made easy",
+  "theme_color": "#0B9CC9",
+  "background_color": "#F8F9FD",
+  "scope": "./",
+  "icons": [
+    {
+        "src": "einhornpay_96x96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+    },{
+        "src": "einhornpay_512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable any"
+    }
+  ],
+  "serviceworker": {
+    "src": "einhornpay-sw.js",
+    "use_cache": false
+  }
+}

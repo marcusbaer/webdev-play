@@ -1,0 +1,25 @@
+{
+    "results": [
+        {
+            "code": "quadrat",
+            "name": "Quadrat",
+            "description": "Das Quadrat ist der Klassiker unter den Formen.",
+            "price": 3.90,
+            "tax": 21
+        },
+        {
+            "code": "triangle",
+            "name": "Dreieck",
+            "description": "Das Dreieck ist wunderbar stabil.",
+            "price": 3.90,
+            "tax": 21
+        },
+        {
+            "code": "circle",
+            "name": "Kreis",
+            "description": "Der Kreis ist immer eine runde Sache.",
+            "price": 3.90,
+            "tax": 21
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+:root {
+  --col-primary: black;
+  --col-primary-contrast: var(--col-brand-03, white);
+}
+
+aside[aria-labelledby="cookie"] {
+  display: none;
+}
+
+nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  justify-content: space-evenly;
+}
+
+nav > ul > li {
+  flex: 1;
+  flex-basis: 33%;
+  padding: 4px 0;
+}
+
+@media screen and (min-width: 480px) {
+  nav > ul > li {
+    flex-basis: auto;
+    text-align: center;
+  }
+}
+
+nav.skip a {
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-9999px);
+}
+nav.skip a:focus {
+  background: var(--white);
+  transform: translateX(0);
+}
+
+/* https://gist.github.com/ffoodd/000b59f431e3e64e4ce1a24d5bb36034 */
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
