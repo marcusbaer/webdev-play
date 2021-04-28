@@ -1,6 +1,15 @@
+<script>
+    const uri = new URL(location.href)
+    const orderSuccessful = uri.search.indexOf('order=ok') > -1
+    if (orderSuccessful) {
+        localStorage.setItem('cart', JSON.stringify([]))
+        alert('Ihre Bestellung war erfolgreich!')
+    }
+</script>
 <h1 id="maincontent" tabindex="-1">Warenkorb</h1>
-<form action="/cart/order" method="POST" id="order">
+<form action="/warenkorb.html" method="GET" id="order">
     <dpx-cart list="[]"></dpx-cart>
+    <input type="hidden" name="order" value="ok" />
     <input type="submit" id="submitorder" value="Kostenpflichtig bestellen">
 </form>
 <script type="module">

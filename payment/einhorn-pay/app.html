@@ -39,11 +39,11 @@
 
                     serviceWorkerRegistration.paymentManager.instruments.set(
                         // Payment instrument key can be any string.
-                        'http://localhost:7004/einhorn-pay',
+                        'https://einhorn-pay.vercel.app',
                         // Payment instrument detail
                         {
                             name: 'Payment Handler Example',
-                            method: 'http://localhost:7004/einhorn-pay'
+                            method: 'https://einhorn-pay.vercel.app'
                         }
                     )
                 } catch (error) {

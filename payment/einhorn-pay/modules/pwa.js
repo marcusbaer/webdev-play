@@ -109,7 +109,7 @@ export const payment = (total = 0, taxes = 0, currency = 'EUR') => {
             // Apple Pay, Google Pay, VISA, Mastercard
             const methodData = [
                 {
-                    supportedMethods: 'http://localhost:7004/einhorn-pay',
+                    supportedMethods: 'https://einhorn-pay.vercel.app',
                     // data: {
                     //     'environment': 'TEST',
                     //     'emailRequired': true,

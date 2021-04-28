@@ -7,6 +7,10 @@ const pageShell = (strings, ...values) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8E1EA1">
+    <link rel="icon" type="image/png" href="./icon_96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="96x96" href="./icon_96x96.png">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" sizes="any">
     <meta http-equiv="Pragma" content="no-cache">
     <meta name="robots" content="noindex,nofollow">
     <title>🦄 Shop</title>
@@ -41,7 +45,7 @@ const pageShell = (strings, ...values) => `
             <ul>
                 <li><a href="./index.html">Startseite</a></li>
                 <li><a href="./warenkorb.html">Warenkorb<dpx-cart badge></dpx-cart></a></li>
-                <li><a href="./einhorn-pay/app.html">Payment App</a></li>
+                <li><a href="https://einhorn-pay.vercel.app/app.html">🦄 Pay</a></li>
             </ul>
         </nav>
     </header>
@@ -65,6 +69,7 @@ self.addEventListener('install', event => {
                 './index.html',
                 './manifest.json',
                 './warenkorb.html',
+                './warenkorb.html?order=ok',
                 './einhorn-pay/components/basics/EinhornShadowElement.js',
                 './einhorn-pay/components/shop/Cart.js',
                 './einhorn-pay/components/shop/Product.js',

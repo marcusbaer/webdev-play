@@ -1,9 +1,9 @@
 const RELEASE_ID = '0.1.2';
 const CACHE_NAME = `einhornpay-cache-v${RELEASE_ID}`;
 
-const origin = 'http://localhost:7004';
-const methodName = `${origin}/einhorn-pay`;
-const checkoutURL = `${origin}/einhorn-pay/checkout.html`;
+const origin = 'https://einhorn-pay.vercel.app';
+const methodName = `${origin}`;
+const checkoutURL = `${origin}/checkout.html`;
 let resolver;
 let payment_request_event;
 
