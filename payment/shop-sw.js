@@ -45,7 +45,7 @@ const pageShell = (strings, ...values) => `
             <ul>
                 <li><a href="./index.html">Startseite</a></li>
                 <li><a href="./warenkorb.html">Warenkorb<dpx-cart badge></dpx-cart></a></li>
-                <li><a href="https://einhorn-pay.vercel.app/app.html">🦄 Pay</a></li>
+                <li><a href="http://localhost:7004/einhorn-pay/app.html">🦄 Pay</a></li>
             </ul>
         </nav>
     </header>

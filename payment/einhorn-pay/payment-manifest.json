@@ -1,4 +1,4 @@
 {
-  "default_applications": ["https://einhorn-pay.vercel.app/manifest.json"],
-  "supported_origins": ["https://payment-five.vercel.app"]
+  "default_applications": ["http://localhost:7004/einhorn-pay/manifest.json"],
+  "XXXsupported_origins": ["http://localhost"]
 }
