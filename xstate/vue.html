@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>xstate + vuex</title>
+    <style>
+        button { border-radius: 50%; height: 120px; width: 120px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@2/dist/vuex.js"></script>
+    <script src="https://unpkg.com/xstate@4/dist/xstate.js"></script>
+    <script type="module">
+
+        const { Machine, actions, interpret } = XState
+
+        const lightMachine = Machine({
+            key: "light",
+            initial: "green",
+            states: {
+                green: {
+                    on: {
+                        TIMER: "yellow"
+                    }
+                },
+                yellow: {
+                    on: {
+                        TIMER: "red"
+                    }
+                },
+                red: {
+                    on: {
+                        TIMER: "green"
+                    }
+                }
+            }
+        })
+
+        Vue.use(Vuex)
+
+        const store = new Vuex.Store({
+            state: {
+                currentState: lightMachine.initial
+            },
+            mutations: {
+                transition(state, action) {
+                    state.currentState = lightMachine.transition(state.currentState, action).value
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    buttonOptions: {
+                        green: "GRÜN",
+                        yellow: "GELB",
+                        red: "ROT"
+                    }
+                }
+            },
+            computed: {
+                buttonText() {
+                    return this.buttonOptions[this.state]
+                },
+                state() {
+                    return this.$store.state.currentState
+                }
+            },
+            mounted() {
+                setInterval(() => {
+                    this.$store.commit("transition", "TIMER")
+                }, 3000)
+            },
+            store
+        })
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{ state }}</div>
+        <button :style="{backgroundColor: state}">{{ buttonText }}</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xstate playground</title>
+    <style>
+        button {
+            border: 1px solid darkslategray;
+            padding: 0.5rem;
+        }
+        button.--active {
+            background-color: aquamarine;
+        }
+    </style>
+    <script src="https://unpkg.com/xstate@4/dist/xstate.js"></script>
+    <script type="module">
+        // import XState from 'https://unpkg.com/xstate@4/dist/xstate.web.js'
+        const { Machine, actions, interpret } = XState
+
+        const toggleButton = document.querySelector('button')
+
+        const toggleMachine = Machine({
+            id: 'toggleMachine',
+            initial: 'inactive',
+            states: {
+                inactive: {
+                    on: {
+                        TOGGLE: 'active'
+                    }
+                },
+                active: {
+                    on: {
+                        TOGGLE: 'inactive'
+                    }
+                }
+            }
+        })
+
+        console.debug(toggleMachine.initialState)
+
+        const toggleService = interpret(toggleMachine).onTransition((state) => {
+            // https://xstate.js.org/docs/guides/states.html#state-methods-and-properties
+            console.debug(state.value)
+            console.debug(state.matches('active')?'ON':'OFF')
+            if (state.matches('active')) {
+                toggleButton.classList.add('--active')
+            } else {
+                toggleButton.classList.remove('--active')
+            }
+        })
+        toggleService.start()
+
+        toggleButton.addEventListener('click', (ev) => {
+            toggleService.send('TOGGLE')
+        })
+    </script>
+</head>
+
+<body>
+    <button>Toggle</button>
+</body>
+
+</html>
