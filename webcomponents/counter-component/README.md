@@ -6,7 +6,7 @@
 - Low-end Geräte werden mehr
 - Spannbreite vergrößert sich
 
-### Lang laufendes JavaSript blockiert den Main Thread für wichtige Aufgaben in der UI.
+### Lang laufendes JavaScript blockiert den Main Thread für wichtige Aufgaben in der UI.
 
 - JavaScript blockiert den Main Thread, nichts passiert, während es läuft
 - Main Thread hat andere wichtige Aufgaben: Seitenlayout, Styles berechnen, Ebenen zeichnen, Compositing für final screen, Benutzerinteraktionen entgegennehmen (Klicks, Scrollen)
@@ -22,7 +22,7 @@
 - langsame Low-end Geräte ausschließen?
 - inklusives Denken an den Tag legen
 
-- Chunking JS: in regelmäßigen Abständigen Breakpoints im Code schaffen
+- Chunking JS: in regelmäßigen Abständen Breakpoints im Code schaffen
 - Browser hat die Gelegenheit, JS-Ausführung zu stoppen und Frames rendern oder Events verarbeiten
 - schedule tasks: setTimeout, postMessage, async/await
 - trotzdem keine Unabhängigkeit von Performance des Endgeräts (16ms)
