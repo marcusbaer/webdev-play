@@ -6,27 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcomponents + Web Worker</title>
     <style>
-        html { font-size: 16px; }
-        .intro { font-weight: bold; }
-        .flex { display: flex; }
-        .flex > * { flex: 1; }
+        html { font-size: 20px; font-family: sans-serif; }
+        body { margin: 4rem 2rem; }
+        h2 { display: none; font-weight: normal; line-height: 180%; margin: 4rem 2rem; max-width: 800px; }
+        h2.active { display: block; }
     </style>
     <script type="module">
-        import ScrollCounter from './scroll-counter.js';
         import TextScanner from './text-scanner.js';
-
-        customElements.define('scroll-counter', ScrollCounter);
         customElements.define('text-scanner', TextScanner);
     </script>
 </head>
 <body>
-    <template id="tpl-scroll-counter">
-        <p class="counter">0</p>
-        <style>
-            :host { color: indianred; font-size: 300%; text-align: center; }
-            .worker { color: limegreen; }
-        </style>
-    </template>
+    <h1>Web Worker</h1>
 
     <!--
         The State Of Web Workers In 2021 (Surma), https://www.smashingmagazine.com/2021/06/web-workers-2021/
@@ -39,62 +30,64 @@
         Was zum Henker ist überhaupt die Ereignisschleife? | Philip Roberts | JSConf EU, https://www.youtube.com/watch?v=8aGhZQkoFbQ&t=664s
     -->
 
-    <h1>Counter Demo</h1>
-    <p class="intro">This page demonstrates a blocking and a non-blocking counter, that starts counting up by scrolling into view. Non-blocking counter is using a web worker approach.</p>
+    <h2>
+        <text-scanner>
+            <template id="tpl-text-scanner" shadowroot="open">
+                <div class="scanner">
+                    <div class="scanner__focus">😎</div>
+                </div>
+                <style>
+                    .scanner { overflow: auto; padding: 8px 0; height: 34px; }
+                    .scanner__focus { position: absolute; font-size: 30px; }
+                </style>
+            </template>
+        </text-scanner>
+    </h2>
+    <h2>Eine wachsende Anzahl und Vielfalt an Endgeräten in den letzten Jahren erfordert die Beachtung von Geräten mit geringer Leistung.</h2>
+    <h2>Lang laufendes JavaSript blockiert den Main Thread für wichtige Aufgaben in der UI.</h2>
+    <h2>Eine blockierte Oberfläche wird als störend wahrgenommen und führt zu höherer Abbruchrate.</h2>
+    <h2>Code-Splitting und regelmäßige Breakpoints im Code helfen nur begrenzt.</h2>
+    <h2>Off-Main-Thread Architektur mit Web Workern erhält die Responsiveness der UI.</h2>
+    <h2>Eine Worker-freundliche Entwicklung erleichtert den Umstieg zu einem späteren Zeitpunkt.</h2>
+    <h2>Beispiel: <a href="./example.html">Webcomponents + Web Worker</a></h2>
 
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+    <script type="module">
+        const setActive = (index = 0) => {
+            headlines.forEach((headline) => {
+                headline.classList.remove('active');
+            });
+            headlines[index].classList.add('active');
+        }
 
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-    <div class="flex">
-        <scroll-counter counter="10" xworker></scroll-counter>
-        <scroll-counter counter="20" xworker></scroll-counter>
-        <scroll-counter counter="30" xworker></scroll-counter>
-    </div>
-    
-    <p>
-        <button>Click me!</button>
-    </p>
+        const toggleFullScreen = () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                document.exitFullscreen();
+                }
+            }
+        }
 
-    <text-scanner>
-        <template id="tpl-text-scanner" shadowroot="open">
-            <div class="scanner">
-                <div class="scanner__focus">😎</div>
-            </div>
-            <style>
-                .scanner { overflow: auto; padding: 8px 0; height: 34px; }
-                .scanner__focus { position: absolute; font-size: 30px; }
-            </style>
-        </template>
-    </text-scanner>
+        const headlineNodes = document.querySelectorAll('h2');
+        const headlines = Array.from(headlineNodes);
+        let index = 0;
 
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-    <script>
-        const buttons = document.querySelectorAll('button');
-        Array.from(buttons).forEach(button => {
-            button.addEventListener('click', ev => {
-                console.log('WAIT!');
-                setTimeout(() => {
-                    console.log(ev);
-                }, 3000);
-            })
-        })
+        setActive(index);
+        window.addEventListener('keyup', (event) => {
+            // full screen
+            if (event.keyCode == 70 || (document.fullscreenElement && event.keyCode == 27)) {
+                toggleFullScreen();
+            }
+            // paging
+            if (event.key === 'ArrowRight' && index<headlines.length-1) {
+                index += 1;
+                setActive(index);
+            } else if (event.key === 'ArrowLeft' && index>0) {
+                index -= 1;
+                setActive(index);
+            }
+        });
     </script>
 </body>
 </html>
