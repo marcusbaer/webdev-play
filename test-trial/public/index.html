@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter-Registrierung</title>
+    <style>
+        :root {
+            --col-gray: #333;
+            --col-white: #FFF;
+        }
+        html { font-family: sans-serif; font-size: 20px; }
+        body { margin: 0; }
+        header { background-color: var(--col-gray); color: var(--col-white); height: 64px; }
+        main { margin: 1rem; }
+        .flex { display: flex; flex-wrap: wrap; }
+        .flex > * { flex: 0 0 100%; }
+        .primary { background-color: limegreen; }
+        .newsletter-form { margin-top: 1rem; }
+        .newsletter-form label { display: block; margin: 0.3rem 0; }
+        .newsletter-form input[type=email] { font-size: 120%; width: 96%; margin: 0.5rem 0; }
+        .newsletter-form :is(input[type=reset], input[type=submit]) { border: 1px solid currentColor; font-size: 100%; margin: 0.5rem 0; padding: 0.3rem; }
+        .newsletter-teaser { line-height: 150%; margin: 0; }
+        @media only screen and (min-width: 768px) {
+            .flex > * { flex: 1; }
+            .newsletter-form { background-color: gainsboro; margin-top: 0; padding: 1rem; }
+            .newsletter-form label { font-size: 80%; }
+        }
+    </style>
+    <script type="module">
+        import MyCheckbox from './my-checkbox.js';
+        customElements.define(MyCheckbox.tagName, MyCheckbox);
+    </script>
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <h1>Für unseren Newsletter anmelden</h1>
+        <div class="flex">
+            <p class="newsletter-teaser">Registriere dich jetzt und bekomme jede Woche die neuesten Updates als Newsletter direkt in dein Postfach!</p>
+            <form class="newsletter-form" action="thankyou.html" method="GET">
+
+                <label for="email">Deine Email-Adresse</label>
+                <input id="email" type="email" name="email" />
+
+                <label>
+                    <my-checkbox title="AGB bestätigen" name="agreed" tabindex=0></my-checkbox> Ich habe die AGB gelesen.
+                </label>
+
+                <label>
+                    <my-checkbox title="Newsletter-Abo bestätigen" name="newsletter" tabindex=0 checked></my-checkbox> Ja, ich möchte den Newsletter wirklich.
+                </label>
+
+                <input type="reset" aria-label="Reset" />
+                <input type="submit" aria-label="Submit" class="primary" />
+            </form>
+        </div>
+        <script>
+            // const form = document.querySelector('form');
+            // form.addEventListener('submit', (event) => {
+            //     // event.preventDefault();
+            //     console.log(event.target.elements);
+            //     // console.log(event.target.checkValidity());
+            //     // event.target.reset();
+            // });
+        </script>
+    </main>
+</body>
+</html>
