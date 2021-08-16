@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form associated Webcomponents</title>
+    <style>
+        html { font-size: 16px; }
+        .flex { display: flex; }
+        .flex > * { flex: 1; }
+    </style>
+    <script type="module">
+        import MyCheckbox from './my-checkbox.js';
+        customElements.define(MyCheckbox.tagName, MyCheckbox);
+    </script>
+</head>
+<body>
+    <h1>
+        <a href="https://html.spec.whatwg.org/multipage/custom-elements.html#form-associated-custom-element" title="Instructions of creating a form-associated custom element">Creating a form-associated custom element</a>
+    </h1>
+
+    <p>Adding a static formAssociated property, with a true value, makes an autonomous custom element a form-associated custom element. The ElementInternals interface helps you to implement functions and properties common to form control elements.</p>
+
+    <h1>
+        <a href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-element-reactions" title="Reactions of a custom element">Custom element reactions</a>
+    </h1>
+
+    <ul>
+        <li>When the form owner of a form-associated custom element is reset, its formResetCallback is called.</li>
+        <li>When the disabled state of a form-associated custom element is changed, its formDisabledCallback is called, given the new state as an argument.</li>
+        <li>When user agent updates a form-associated custom element's value on behalf of a user, its formStateRestoreCallback is called, given the new value and a string indicating a reason, "restore" or "autocomplete", as arguments.</li>
+    </ul>
+    
+    <form action="#" method="GET">
+        <label for="email">Your email</label>
+        <input id="email" type="email" /><br>
+        <label>
+            <my-checkbox title="Toggles agreement" name="agreed" tabindex=0></my-checkbox> I read the agreement.
+            <!-- See also "Inclusive Inputs" in document https://www.sitepoint.com/frameworkless-web-components-introduction/ -->
+            <!-- ElementInternals polyfill https://www.npmjs.com/package/element-internals-polyfill -->
+        </label><br>
+        <label>
+            <my-checkbox title="Toggle newsletter subscription" name="newsletter" tabindex=0 checked></my-checkbox> I'd like to receive a newsletter.
+        </label>
+        <input type="submit" aria-label="Submit" />
+    </form>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            console.log(event.target.elements);
+            // event.target.validate();
+            event.target.reset();
+        });
+    </script>
+
+    <hr>
+    <a href="https://html.spec.whatwg.org/multipage/custom-elements.html">Custom Elements in HTML Living Standard</a>,
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals">HTMLElement.attachInternals()</a>
+</body>
+</html>
