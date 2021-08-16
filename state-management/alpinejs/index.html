@@ -1,0 +1,79 @@
+<html lang="de">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>AlpineJS + Webcomponents</title>
+    <style>html { font-size: 20px; }</style>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
+    <script type="module">
+        class BusinessCard extends HTMLElement {
+            static get tagName() { return 'business-card'; }
+            static get observedAttributes() { return ['place', 'profession']; }
+            constructor() {
+                super();
+                this.shadow = this.attachShadow({ mode: 'open' });
+                this.shadow.innerHTML = document.querySelector(`#tpl-${this.tagName.toLowerCase()}`).innerHTML;
+            }
+            connectedCallback() {
+                this.professionNode = this.shadow.querySelector('.profession');
+                this.placeNode = this.shadow.querySelector('.place');
+                this.professionNode.textContent = this.getAttribute('profession');
+                this.placeNode.textContent = this.getAttribute('place');
+            }
+            attributeChangedCallback(name, oldVal, newVal) {
+                // console.log(`%cattribute changed: ${name} ${newVal}`, "color: rebeccapurple;");
+                if (this[`${name}Node`]) this[`${name}Node`].textContent = newVal;
+            }
+        }
+        customElements.define(BusinessCard.tagName, BusinessCard);
+    </script>
+</head>
+
+<body>
+    <template id="tpl-business-card">
+        <style>
+            :host {
+                display: block;
+                background: silver;
+                border: 2px solid sienna;
+                margin: 4px 0;
+                padding: 0 8px;
+            }
+        </style>
+        <slot name="name"></slot>
+        <p class="profession"></p>
+        <p class="place"></p>
+    </template>
+
+    <h1>AlpineJS + Webcomponents</h1>
+
+    <section x-data="{ name: 'Max Mustermann', profession: 'Einkäufer' }">
+        <h2>Attribute binding</h2>
+        <business-card :profession="profession" place="Blauweg 10, 12345 Berlin">
+            <h3 slot="name" x-text="name"></h3>
+        </business-card>
+
+        <label for="name">Name:</label>
+        <input id="name" type="text" x-model="name" /><br>
+        <!-- <p x-text="name"></p> -->
+
+        <label for="profession">Beruf:</label>
+        <input id="profession" type="text" x-model="profession" />
+        <!-- <p x-text="profession"></p> -->
+
+    </section>
+
+    <section
+        x-data="{ items: [{name: 'Max Mustermann', profession: 'Einkäufer', place: 'Blauweg 10, 12345 Berlin' }, {name: 'Nele Nustername', profession: 'Verkäuferin', place: 'Gelballee 20, 54321 Konz' }] }">
+        <h2>Eine Liste</h2>
+        <template x-for="item in items" :key="item">
+            <business-card :profession="item.profession" :place="item.place">
+                <h3 slot="name" x-text="item.name">Marcus Baer</h3>
+            </business-card>
+        </template>
+    </section>
+
+</body>
+
+</html>
