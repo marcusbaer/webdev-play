@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow + Light</title>
+    <style>p { font-style: italic; }</style>
+    <script type="module">
+        class LightAndShadow extends HTMLElement {
+            constructor() {
+                super();
+
+                this.shadow = this.attachShadow({mode:'open'});
+                this.shadow.innerHTML = `<p>shadow</p><style>p { color: red; cursor: pointer; }</style>`;
+                this.innerHTML = `<p>light</p>`;
+            }
+
+            connectedCallback() {
+                console.log(this.shadow.firstChild);
+                this.shadow.firstChild.addEventListener('click', () => console.log('hi'));
+            }
+        }
+        customElements.define('light-and-shadow', LightAndShadow);
+    </script>
+</head>
+
+<body>
+    <h1>Light and Shadow</h1>
+
+    <light-and-shadow></light-and-shadow>
+</body>
+
+</html>
