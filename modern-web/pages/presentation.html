@@ -10,6 +10,48 @@
         ol, p, pre, ul { line-height: 150%; }
         li { padding: 8px 0; }
     </style>
+    <script type="module">
+        customElements.define('code-import', class extends HTMLElement {
+            static get observedAttributes() {
+                return ['url'];
+            }
+            static get unobservedAttributes() {
+                return ['headline'];
+            }
+            constructor() {
+                super();
+                this.shadow = this.attachShadow({mode:'closed'});
+                this.shadow.innerHTML = `
+                <style>
+                    :host { display: block; background-color: #F3F3F3; padding: 16px; }
+                    h3 { margin: 0; padding: 0; }
+                    pre { overflow-x: scroll; }
+                </style>
+                <h3></h3>
+                <pre><code><slot></slot></code></pre>
+                `;
+                this.codeNode = this.shadow.querySelector('code');
+                this.headlineNode = this.shadow.querySelector('h3');
+            }
+            attributeChangedCallback(name, oldVal, newVal) {
+                this.renderCode(newVal);
+            }
+            async renderCode(url) {
+                const code = await this.fetchCodeByUrl(url);
+                const fileName = url.split('/').at(-1);
+                this.codeNode.textContent = code;
+                if (this.hasAttribute('headline')) {
+                    this.headlineNode.textContent = `// ${fileName}`;
+                }
+            }
+            async fetchCodeByUrl(url) {
+                const response = await fetch(url);
+                const data = await response.text();
+
+                return data;
+            }
+        })
+    </script>
 </head>
 <body>
     <h1>Unit Tests für Schnittstellen von Webkomponenten</h1>
@@ -59,39 +101,18 @@
             Wir sind es gewohnt, Eigenschaften von Objekten und DOM-Knoten mit Javascript abzufragen oder zu setzen und Funktionen auszuführen...
         </li>
     </ol>
-    <pre>
-        <code>
-            // im Inkognito-Modus mit Ansicht der DOM-Elemente
 
-            document.body.innerHTML = '&lt;h1>Hallo&lt;/h1>'
-            const h = document.querySelector('h1')
-            h.id = 'foo'
-            h.id
-            h.addEventListener('mouseover', console.log)
+    <p>((im Inkognito-Modus mit Ansicht der DOM-Elemente))</p>
+    <code-import url="../snippets/js-api.js"></code-import>
 
-            document.body.innerHTML = '&lt;textarea>Hallo&lt;/textarea>'
-            document.querySelector('textarea').value
-        </code>
-    </pre>
     <ol start="2">
         <li>
             ((Fortsetzung <em>JS-Objekteigenschaften</em>)) und auch bei Webkomponenten kann das die Kommunikation erleichtern.
         </li>
     </ol>
-    <pre>
-        <code>
-            document.body.innerHTML = '&lt;happy-hippo>&lt;/happy-hippo>&lt;br>&lt;textarea>Hallo&lt;/textarea>'
-            customElements.define('happy-hippo', class extends HTMLElement {
-                constructor() {
-                    super();
-                    this.shadow = this.attachShadow({mode: 'open'});
-                    this.shadow.innerHTML = '&lt;p>I am &lt;strong>strong enough&lt;/strong> to move that mountain.&lt;/p>';
-                }
-            });
-            document.querySelector('happy-hippo').id = 'happy'
-            document.querySelector('happy-hippo').name = 'Dingo'
-        </code>
-    </pre>
+
+    <code-import url="../snippets/happy-hippo-simple.js"></code-import>
+
     <ol start="3">
         <li>
             <em>CSS-Variablen</em> gelten im jeweiligen Scope und werden vererbt, auch an Custom Elements:
@@ -124,11 +145,9 @@
         Ist dieser installiert, kann er Tests ausführen und eine Statistik zur Testabdeckung generieren.
         Abhängigkeiten von NPM Paketen kann er bei Bedarf auflösen.
     </p>
-    <pre>
-        <code>
-            "test": "web-test-runner \"test/**/*.test.js\" --node-resolve --coverage"
-        </code>
-    </pre>
+
+    <code-import url="../snippets/package.json"></code-import>
+
     <p>
         NPM Pakete zur Ausführung der Tests in anderen Browsern (z.B. <code>@web/test-runner-puppeteer</code>) ergänzen das Basispaket.
         Mit dem von Microsoft stammenden <a href="https://github.com/microsoft/playwright">Playwright</a> können verschiedene Browser, wie Chromium, Firefox oder Webkit angesteuert werden.
@@ -144,23 +163,26 @@
     <p>
         Nach der Installation aller gewünschten Pakete, kann ein erster Test erstellt und mit <code>npm test</code> ausgeführt werden.
     </p>
-    <pre>
-        <code>
-            // test/join.test.js
-            import { expect } from '@esm-bundle/chai'
 
-            it('joins an array to a string', () => {
-                expect(['a', 'b'].join('-')).to.equal('a-b')
-                expect(['a', 'b'].join('')).to.equal('ab')
-            })
-        </code>
-    </pre>
+    <code-import>
+// test/join.test.js
+import { expect } from '@esm-bundle/chai'
+
+it('joins an array to a string', () => {
+    expect(['a', 'b'].join('-')).to.equal('a-b')
+    expect(['a', 'b'].join('')).to.equal('ab')
+})
+    </code-import>
+
     <p>
         Tests im DOM, wie sie für Webkomponenten erforderlich sind, können ebenfalls erstellt werden.
         Hierzu kann ein Test in einer HTML-Datei angelegt werden.
         Eine einfache, auf die Testfälle angepasste HTML-Struktur ist die Grundlage.
         In einem <code>script</code>-Block werden dann die eigentlichen Tests geschrieben.
     </p>
+
+    <code-import url="../snippets/HappyHippo.test.html" headline></code-import>
+
     <pre>
         <code>
             // test/HappyHippo.test.html
