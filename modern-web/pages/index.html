@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Demo</title>
+    <style>
+        :root {
+            --unit: 8px;
+            --font-style: italic;
+        }
+
+        happy-hippo::part(message) {
+            background-color: aquamarine;
+            color: darkgreen;
+        }
+    </style>
+    <script type="module">
+        import HappyHippo from '../src/HappyHippo.js';
+
+        customElements.define(HappyHippo.tagName, HappyHippo);
+
+        const hippoNode = document.querySelector('happy-hippo');
+        hippoNode.addEventListener('mountain-moved', (event) => {
+            console.log(event);
+        });
+        // hippoNode.setAttribute('moved', true);
+    </script>
+</head>
+
+<body>
+    <h1>Hello world!</h1>
+    <happy-hippo name="Dingo">
+        <p>Are you fine with that?</p>
+    </happy-hippo>
+</body>
+
+</html>

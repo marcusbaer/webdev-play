@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Tests für Schnittstellen von Webkomponenten</title>
+    <style>
+        html { font-size: 20px; font-family: sans-serif; padding: 8px;}
+        ol, p, pre, ul { line-height: 150%; }
+        li { padding: 8px 0; }
+    </style>
+</head>
+<body>
+    <h1>Unit Tests für Schnittstellen von Webkomponenten</h1>
+    <p>
+        Die Entwicklung von Commerce-Umgebungen und anderen Webseiten basiert immer häufiger auf einem von Komponenten gestützten Entwicklungsansatz.
+        Unabhängig von der Technologieentscheidung, ob mit Vue, React oder als Webkomponenten,
+        bietet dieser Ansatz doch erhebliche Vorteile hinsichtlich Modularität und Skalierbarkeit.
+        Eine Komponente ist flexibel einsetzbar und lässt sich über ihre Eigenschaften an ihren jeweiligen Einsatzzweck anpassen.
+    </p>
+    <p>
+        Webkomponenten stechen dabei als von Renderingprozessen unabhängige Lösung hervor, die sich einfach mit anderen Frameworks 
+        kombinieren lässt. Neben ihrer Flexibilität bieten sie darüber hinaus mit dem Shadow DOM als einzige Technologie
+        eine echte Kapselung des Stylings.
+    </p>
+    <p>
+        Auch bei uns hat ihre Bedeutung für Projekte in den vergangenen Monaten erheblich zugenommen. Wir haben viel gelernt, sind aber noch nicht am Ende des Lernens angekommen.
+        Komponenten zu entwickeln, bedeutet, ihre Einsatzszenarien im Blick zu behalten und so auch ihre Kommunikationsfähigkeit zu beachten.
+        Darauf möchte ich heute einmal den Blick lenken und darauf, wie das möglicherweise mit Unit Tests sichergestellt werden kann.
+    </p>
+    <p>
+        Die Initiative "<a href="https://modern-web.dev/">Modern Web</a>" zeigt ein interessantes und einfach bereitzustellendes Setup
+        für Projekte auf. Nicht alles davon wird auf unsere Projekte anwendbar sein, etwa Rollup anstatt Webpack
+        oder Web Dev Server anstelle unseres lokalen Servers. Auch die angepasste Variante von Storybook wird bei uns
+        vermutlich nicht zum Einsatz kommen. Dennoch lassen sich auf Basis dieses Stacks hervorragend Unit Tests
+        für unterschiedliche Browser erstellen und damit auch Tests für die Schnittstellen von Webkomponenten.
+    </p>
+    <p>
+        Das werden wir uns gleich einmal etwas genauer ansehen.
+    </p>
+    <h2>Schnittstellen einer Webkomponente</h2>
+    <p>
+        Webkomponenten bilden, vor allem im Zusammenhang mit Shadow DOM, in sich geschlossene Einheiten,
+        die Styling und Layout, aber auch ihre eigene Logik beinhalten. Dennoch gibt es verschiedene
+        Möglichkeiten, um in sie hinein zu kommunizieren.
+    </p>
+    <ol>
+        <li>
+            <em>Attribute</em> bilden die klassische Schnittstelle für eine Kommunikation in Komponenten hinein.
+            Vor- und Nachteil zugleich ist dabei, dass dies, wie bei nativen HTML-Elementen immer Zeichenketten oder boolsche Werte sind.
+            Im Vergleich zu typisierten Props bei Vue und React mag das als rückschrittlich erscheinen.
+            Als Framework unabhängige universale Komponenten bietet ihr Prinzip jedoch eine solide Lösung für eine Typzuweisung:
+            was auch immer intern damit getan wird, das Attribut wird stets als einfacher String übermittelt und muss
+            bei Bedarf validiert und umgewandelt werden.
+        </li>
+        <li>
+            <em>Javascript-Objekt-Eigenschaften</em> ermöglichen es zusätzlich mit Komponenten direkt im Javascript-Kontext zu kommunizieren.
+            Wir sind es gewohnt, Eigenschaften von Objekten und DOM-Knoten mit Javascript abzufragen oder zu setzen und Funktionen auszuführen...
+        </li>
+    </ol>
+    <pre>
+        <code>
+            // im Inkognito-Modus mit Ansicht der DOM-Elemente
+
+            document.body.innerHTML = '&lt;h1>Hallo&lt;/h1>'
+            const h = document.querySelector('h1')
+            h.id = 'foo'
+            h.id
+            h.addEventListener('mouseover', console.log)
+
+            document.body.innerHTML = '&lt;textarea>Hallo&lt;/textarea>'
+            document.querySelector('textarea').value
+        </code>
+    </pre>
+    <ol start="2">
+        <li>
+            ((Fortsetzung <em>JS-Objekteigenschaften</em>)) und auch bei Webkomponenten kann das die Kommunikation erleichtern.
+        </li>
+    </ol>
+    <pre>
+        <code>
+            document.body.innerHTML = '&lt;happy-hippo>&lt;/happy-hippo>&lt;br>&lt;textarea>Hallo&lt;/textarea>'
+            customElements.define('happy-hippo', class extends HTMLElement {
+                constructor() {
+                    super();
+                    this.shadow = this.attachShadow({mode: 'open'});
+                    this.shadow.innerHTML = '&lt;p>I am &lt;strong>strong enough&lt;/strong> to move that mountain.&lt;/p>';
+                }
+            });
+            document.querySelector('happy-hippo').id = 'happy'
+            document.querySelector('happy-hippo').name = 'Dingo'
+        </code>
+    </pre>
+    <ol start="3">
+        <li>
+            <em>CSS-Variablen</em> gelten im jeweiligen Scope und werden vererbt, auch an Custom Elements:
+            <code>happy-hippo { --font-style: italic; }</code> (es sind eben echte HTML-Elemente).
+            In der Webkomponente kann der Wert einer CSS-Variablen verwendet werden oder auf einen Default-Wert zurückgreifen:
+            <code>:host { font-style: var(--font-style, inherit); }</code>.
+        </li>
+        <li>
+            Als <em>Part</em> gekennzeichnete Knoten einer Webkomponente werden explizit für ein externes Styling freigegeben.
+            Mit dem <code>::part CSS-Pseudo-Element</code> können intern gesetzte Styles überschrieben werden:
+            <code>happy-hippo::part(message)</code>.
+        </li>
+        <li>
+            Und was ist mit <em>Slots</em>? Sie bieten die Möglichkeit, externe Inhalte im Context einer Webkomponente zu plazieren.
+            Auch, wenn es fraglich wäre, sie als Schnittstelle zu Komponenten zu verstehen, sollte das Feature dennoch getestet werden,
+            sofern es von einer Komponente unterstützt wird.
+        </li>
+        <li>
+            Mit <em>Events</em> kommunizieren Webkomponenten nach Außen. Als eine Art Schnittstelle in die andere Richtung,
+            sollte ihr Vorhandensein sie mit Tests dokumentiert und abgesichert werden:
+            <code>document.querySelector('happy-hippo').addEventListener('mountain-moved', console.log)</code>.
+        </li>
+    </ol>
+    <h2>Stack der Unit Tests</h2>
+    <p>
+        ((zeigen der package.json))
+    </p>
+    <p>
+        Der hier zum Einsatz kommende Stack basiert ausschließlich auf dem <code>@web/test-runner</code>.
+        Ist dieser installiert, kann er Tests ausführen und eine Statistik zur Testabdeckung generieren.
+        Abhängigkeiten von NPM Paketen kann er bei Bedarf auflösen.
+    </p>
+    <pre>
+        <code>
+            "test": "web-test-runner \"test/**/*.test.js\" --node-resolve --coverage"
+        </code>
+    </pre>
+    <p>
+        NPM Pakete zur Ausführung der Tests in anderen Browsern (z.B. <code>@web/test-runner-puppeteer</code>) ergänzen das Basispaket.
+        Mit dem von Microsoft stammenden <a href="https://github.com/microsoft/playwright">Playwright</a> können verschiedene Browser, wie Chromium, Firefox oder Webkit angesteuert werden.
+        Auch für die Integration von Browserstack gibt es ein Paket.
+    </p>
+    <p>
+        Das ebenfalls zusätzlich zu installierende NPM Paket <code>@web/test-runner-commands</code>
+        bietet Befehle, um z.B. die Browserseite zu kontrollieren oder auf das Dateisystem zugreifen zu können.
+        Es hilft beim Einstellen eines Viewports, der Emulation von Media-Queries oder dem Setup des User-Agents.
+        Auch eigene Befehle und Funktionen lassen sich implementieren.
+    </p>
+    <h2>Unit Tests für Webkomponenten</h2>
+    <p>
+        Nach der Installation aller gewünschten Pakete, kann ein erster Test erstellt und mit <code>npm test</code> ausgeführt werden.
+    </p>
+    <pre>
+        <code>
+            // test/join.test.js
+            import { expect } from '@esm-bundle/chai'
+
+            it('joins an array to a string', () => {
+                expect(['a', 'b'].join('-')).to.equal('a-b')
+                expect(['a', 'b'].join('')).to.equal('ab')
+            })
+        </code>
+    </pre>
+    <p>
+        Tests im DOM, wie sie für Webkomponenten erforderlich sind, können ebenfalls erstellt werden.
+        Hierzu kann ein Test in einer HTML-Datei angelegt werden.
+        Eine einfache, auf die Testfälle angepasste HTML-Struktur ist die Grundlage.
+        In einem <code>script</code>-Block werden dann die eigentlichen Tests geschrieben.
+    </p>
+    <pre>
+        <code>
+            // test/HappyHippo.test.html
+            &lt;!DOCTYPE html>
+            &lt;html>
+            &lt;head>
+                &lt;style>
+                    :root {
+                        --font-style: italic;
+                    }
+
+                    html {
+                        font-size: 16px;
+                    }
+
+                    happy-hippo::part(message) {
+                        background-color: green;
+                        color: blue;
+                    }
+                &lt;/style>
+            &lt;/head>
+
+            &lt;body>
+                &lt;happy-hippo name="Dingo">&lt;/happy-hippo>
+
+                &lt;script type="module">
+                    import { runTests } from '@web/test-runner-mocha';
+                    import { expect } from '@esm-bundle/chai';
+                    import { setViewport } from '@web/test-runner-commands';
+                    import { visualDiff } from '@web/test-runner-visual-regression';
+                    import HappyHippo from '../src/HappyHippo'
+
+                    let hippoNode;
+                    const TAGNAME = 'happy-hippo';
+                    customElements.define(HappyHippo.tagName, HappyHippo);
+
+                    runTests(() => {
+                        describe('HappyHippo Component API', () => {
+                            beforeEach(async () => {
+                                hippoNode = document.querySelector(TAGNAME);
+                            });
+                            it('has a tagName', async () => {
+                                expect(HappyHippo.tagName).to.equal(TAGNAME);
+                            });
+                            it('defines observedAttributes', async () => {
+                                expect(HappyHippo.observedAttributes).to.equal(['name']);
+                            });
+                            it('has a getter for name', async () => {
+                                expect(hippoNode.name).to.equal('Dingo');
+                            });
+                            it('updates a name by setter', async () => {
+                                hippoNode.name = 'Cangaroo';
+                                expect(hippoNode.name).to.equal('Cangaroo');
+                            });
+                            it('updates a name by attribute', async () => {
+                                hippoNode.setAttribute('name', 'Cangaroo');
+                                expect(hippoNode.name).to.equal('Cangaroo');
+                            });
+                            it('uses font style from --font-style over cascade', async () => {
+                                const fontStyle = getComputedStyle(hippoNode).fontStyle;
+                                expect(fontStyle).to.equal('italic');
+                            });
+                            it('uses font size from cascade', async () => {
+                                const fontSize = getComputedStyle(hippoNode).fontSize;
+                                expect(fontSize).to.equal('16px');
+                            });
+                            it('has basic host styles', async () => {
+                                const display = getComputedStyle(hippoNode).display;
+                                expect(display).to.equal('inline-block');
+                                const border = getComputedStyle(hippoNode).border;
+                                expect(border).to.equal('1px solid rgb(128, 128, 128)');
+                            });
+                            it('allows styling a part message', async () => {
+                                await visualDiff(hippoNode, 'happy-hippo');
+                            });
+                        })
+                    });
+                &lt;/script>
+            &lt;/body>
+            &lt;/html>
+        </code>
+    </pre>
+    <p>
+        Wie kann man nun all diese Sachen testen?
+        ((Beispiele für Attribute, Javascript-Objekt-Eigenschaften, observedAttributes, CSS-Variablen, Parts, Slots und Events demonstrieren. Schrittweise Tests für das Beispiel schreiben.))
+    </p>
+    <p>...</p>
+    <h2>Schluss</h2>
+    <p>
+        Aktuell sind wir noch nicht an dem Punkt, dass wir uns bei der Entwicklung von Webkomponenten intensiv,
+        oder wenigstens ausreichend, mit ihren jeweiligen Schnittstellen auseinandersetzen. Diesbezüglich sehe ich uns erst
+        am Anfang. Das ist sicher auch dem Umstand geschuldet, dass älteren Browsern in unseren Projekten noch immer
+        eine relativ hohe Bedeutung zukommt. Das aus einzelnen Komponenten entstehende Gesamtbild und die qualitative Absicherung
+        der Bedienbarkeit einer Website als Ganzes hat für uns zunächst Vorrang.
+    </p>
+    <p>
+        Haben wir Webkomponenten aber erst einmal richtig kennen- und einsetzen gelernt, halte ich die Qualitätssicherung
+        ihrer Schnittstellen mit Unit Tests für den nächsten logischen Schritt. Das vorgestellte Setup kann dabei eine Orientierung
+        und Diskussionsgrundlage dafür bieten, welche Werkzeuge hierbei zukünftig zum Einsatz kommen.
+    </p>
+</body>
+</html>
