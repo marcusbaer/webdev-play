@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
+    "@esm-bundle/chai": "^4.3.4-fix.0",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addon-links": "^6.3.8",
@@ -20,6 +21,7 @@
     "@web/dev-server": "^0.1.22",
     "@web/dev-server-storybook": "^0.3.8",
     "@web/rollup-plugin-html": "^1.10.1",
+    "@web/test-runner": "^0.13.18",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.1",
     "lit-html": "^2.0.0",

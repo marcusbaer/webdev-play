@@ -6,17 +6,14 @@
         :root {
             --font-style: italic;
         }
-
         html {
             font-size: 16px;
         }
-
         happy-hippo::part(message) {
             background-color: green;
             color: blue;
         }
     </style>
-    
 </head>
 
 <body>
@@ -27,7 +24,7 @@
     <script type="module">
         import { runTests } from '@web/test-runner-mocha';
         import { expect } from '@esm-bundle/chai';
-        import { setViewport } from '@web/test-runner-commands';
+        // import { setViewport } from '@web/test-runner-commands';
         import { visualDiff } from '@web/test-runner-visual-regression';
         import HappyHippo from '../src/HappyHippo'
 
@@ -40,41 +37,34 @@
                 beforeEach(async () => {
                     hippoNode = document.querySelector(TAGNAME);
                 });
+
                 it('has a tagName', async () => {
                     expect(HappyHippo.tagName).to.equal(TAGNAME);
                 });
+
                 it('defines observedAttributes', async () => {
                     expect(HappyHippo.observedAttributes).to.have.deep.members(['moved', 'name']);
                 });
-                it('shows slot content at the right place', async () => {
-                    expect(hippoNode.textContent).to.contain('Are you fine');
-                    expect(hippoNode.textContent).to.exist;
-                });
-                it('dispatches custom event mountain-moved', async () => {
-                    hippoNode.addEventListener('mountain-moved', (event) => {
-                        expect(event.type).to.equal('mountain-moved');
-                    });
-                    hippoNode.setAttribute('moved', true);
-                });
-                it('has a getter for name', async () => {
-                    expect(hippoNode.name).to.equal('Dingo');
-                });
-                it('updates a name by setter', async () => {
-                    hippoNode.name = 'Cangaroo';
-                    expect(hippoNode.name).to.equal('Cangaroo');
-                });
+
                 it('updates a name by attribute', async () => {
                     hippoNode.setAttribute('name', 'Cangaroo');
                     expect(hippoNode.name).to.equal('Cangaroo');
                 });
-                it('uses font style from --font-style over cascade', async () => {
-                    const fontStyle = getComputedStyle(hippoNode).fontStyle;
-                    expect(fontStyle).to.equal('italic');
+
+                it('has a getter for name', async () => {
+                    expect(hippoNode.name).to.equal('Dingo');
                 });
+
+                it('updates a name by setter', async () => {
+                    hippoNode.name = 'Cangaroo';
+                    expect(hippoNode.name).to.equal('Cangaroo');
+                });
+
                 it('uses font size from cascade', async () => {
                     const fontSize = getComputedStyle(hippoNode).fontSize;
                     expect(fontSize).to.equal('16px');
                 });
+
                 it('has basic host styles', async () => {
                     const display = getComputedStyle(hippoNode).display;
                     expect(display).to.equal('inline-block');
@@ -85,9 +75,28 @@
                         expect(border).to.equal('1px solid rgb(128, 128, 128)');
                     }
                 });
-                it('allows styling a part message', async () => {
+
+                it('uses font style from --font-style over cascade', async () => {
+                    const fontStyle = getComputedStyle(hippoNode).fontStyle;
+                    expect(fontStyle).to.equal('italic');
+                });
+
+                it('allows styling a part with the name "message"', async () => {
                     await visualDiff(hippoNode, 'happy-hippo');
                 });
+
+                it('dispatches custom event mountain-moved', async () => {
+                    hippoNode.addEventListener('mountain-moved', (event) => {
+                        expect(event.type).to.equal('mountain-moved');
+                    });
+                    hippoNode.setAttribute('moved', true);
+                });
+
+                it('shows slot content at the right place', async () => {
+                    expect(hippoNode.textContent).to.contain('Are you fine');
+                    expect(hippoNode.textContent).to.exist;
+                });
+
             })
         });
     </script>

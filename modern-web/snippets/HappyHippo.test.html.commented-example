@@ -1,0 +1,123 @@
+(01) <!DOCTYPE html>
+(01) <html>
+
+(01) <head>
+(08)     <style>
+
+(10)         :root {
+(10)             --font-style: italic;
+(10)         }
+
+(08)         html {
+(08)             font-size: 16px;
+(08)         }
+
+(11)         happy-hippo::part(message) {
+(11)             background-color: green;
+(11)             color: blue;
+(11)         }
+
+(08)     </style>
+    
+(01) </head>
+
+(01) <body>
+(03)     <happy-hippo name="Dingo">
+(03)         <p>Are you fine with that?</p>
+(03)     </happy-hippo>
+
+(02)     <script type="module">
+(02)         import { runTests } from '@web/test-runner-mocha';
+(04)         import { expect } from '@esm-bundle/chai';
+(XX)         import { setViewport } from '@web/test-runner-commands';
+(11)         import { visualDiff } from '@web/test-runner-visual-regression';
+(03)         import HappyHippo from '../src/HappyHippo'
+
+(03)         let hippoNode;
+(03)         const TAGNAME = 'happy-hippo';
+(03)         customElements.define(HappyHippo.tagName, HappyHippo);
+
+(02)         runTests(() => {
+(03)             describe('HappyHippo Component API', () => {
+(03)                 beforeEach(async () => {
+(03)                     hippoNode = document.querySelector(TAGNAME);
+(03)                 });
+
+(04)                 // to make sure, a consistent tagName will be provided by component
+(04)                 it('has a tagName', async () => {
+(04)                     expect(HappyHippo.tagName).to.equal(TAGNAME);
+(04)                 });
+
+(05)                 // just to describe observed attributes
+(05)                 it('defines observedAttributes', async () => {
+(05)                     expect(HappyHippo.observedAttributes).to.have.deep.members(['moved', 'name']);
+(05)                 });
+
+(06)                 // API: attribute
+(06)                 it('updates a name by attribute', async () => {
+(06)                     hippoNode.setAttribute('name', 'Cangaroo');
+(06)                     expect(hippoNode.name).to.equal('Cangaroo');
+(06)                 });
+
+(07)                 // API: JS object property getter
+(07)                 it('has a getter for name', async () => {
+(07)                     expect(hippoNode.name).to.equal('Dingo');
+(07)                 });
+(07)                 // API: JS object property setter
+(07)                 it('updates a name by setter', async () => {
+(07)                     hippoNode.name = 'Cangaroo';
+(07)                     expect(hippoNode.name).to.equal('Cangaroo');
+(07)                 });
+
+(08)                 // basic global CSS
+(08)                 it('uses font size from cascade', async () => {
+(08)                     const fontSize = getComputedStyle(hippoNode).fontSize;
+(08)                     expect(fontSize).to.equal('16px');
+(08)                 });
+
+(09)                 // basic host CSS
+(09)                 it('has basic host styles', async () => {
+(09)                     const display = getComputedStyle(hippoNode).display;
+(09)                     expect(display).to.equal('inline-block');
+(09)                     const color = getComputedStyle(hippoNode).color;
+(09)                     expect(color).to.equal('rgb(255, 165, 0)');
+(09)                     if (navigator.userAgent.indexOf('Firefox') === -1) {
+(09)                         const border = getComputedStyle(hippoNode).border;
+(09)                         expect(border).to.equal('1px solid rgb(128, 128, 128)');
+(09)                     }
+(09)                 });
+
+(10)                 // API: CSS variable
+(10)                 it('uses font style from --font-style over cascade', async () => {
+(10)                     const fontStyle = getComputedStyle(hippoNode).fontStyle;
+(10)                     expect(fontStyle).to.equal('italic');
+(10)                 });
+
+(11)                 // API: styling parts
+(11)                 it('allows styling a part with the name "message"', async () => {
+(11)                     // requires: npm install --save-dev @web/test-runner-visual-regression
+(11)                     // requires: mv web-test-runner.config.mjs.example web-test-runner.config.mjs
+(11)                     // requires: "test:update-baseline": "web-test-runner test/**/*.test.html --node-resolve --update-visual-baseline",
+(11)                     await visualDiff(hippoNode, 'happy-hippo');
+(11)                 });
+
+(12)                 // API: events
+(12)                 it('dispatches custom event mountain-moved', async () => {
+(12)                     hippoNode.addEventListener('mountain-moved', (event) => {
+(12)                         expect(event.type).to.equal('mountain-moved');
+(12)                     });
+(12)                     hippoNode.setAttribute('moved', true);
+(12)                 });
+
+(13)                 // slots? cannot be tested as it is always true
+(13)                 it('shows slot content at the right place', async () => {
+(13)                     expect(hippoNode.textContent).to.contain('Are you fine');
+(13)                     expect(hippoNode.textContent).to.exist;
+(13)                 });
+
+(03)             })
+(02)         });
+(02)     </script>
+(01) </body>
+
+(01) </html>
