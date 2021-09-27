@@ -18,7 +18,7 @@
 
 <body>
     <happy-hippo name="Dingo">
-        <p>Are you fine with that?</p>
+        <p>Are you too?</p>
     </happy-hippo>
 
     <script type="module">

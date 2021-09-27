@@ -9,6 +9,12 @@
         html { font-size: 20px; font-family: sans-serif; padding: 8px;}
         ol, p, pre, ul { line-height: 150%; }
         li { padding: 8px 0; }
+
+        @media print {
+            html { font-size: 13px; }
+            ol, p, pre, ul { line-height: 120%; max-width: 80%; }
+            li { padding: 4px 0; }
+        }
     </style>
     <script type="module">
         customElements.define('code-import', class extends HTMLElement {
@@ -23,9 +29,17 @@
                 this.shadow = this.attachShadow({mode:'closed'});
                 this.shadow.innerHTML = `
                 <style>
-                    :host { display: block; background-color: #F3F3F3; padding: 16px; }
+                    :host { display: block; background-color: none; border-left: 3px solid #999; padding: 0 16px; }
                     h3 { margin: 0; padding: 0; }
                     pre { overflow-x: scroll; }
+
+                    @media screen {
+                        :host { background-color: #F3F3F3; border-left: none; padding: 16px; }
+                    }
+
+                    @media print {
+                        pre { font-size: 11px; }
+                    }
                 </style>
                 <h3></h3>
                 <pre><code><slot></slot></code></pre>
@@ -79,7 +93,7 @@
         für unterschiedliche Browser erstellen und damit auch Tests für die Schnittstellen von Webkomponenten.
     </p>
     <p>
-        Das werden wir uns gleich einmal etwas genauer ansehen. Zunächst möchte ich aber noch ein paar Überlegungen zu den Schnittstellen einer Webkomponente anstellen.
+        Das werden wir uns gleich einmal etwas genauer ansehen. Zunächst möchte ich aber noch ein paar Überlegungen zu den Schnittstellen einer Webkomponente anstellen. [SLIDE]
     </p>
     <h2>Schnittstellen einer Webkomponente</h2>
     <p>
@@ -133,7 +147,7 @@
         <li>
             Und was ist mit <em>Slots</em>? Sie bieten die Möglichkeit, externe Inhalte im Context einer Webkomponente zu plazieren.
             Auch, wenn es fraglich wäre, sie als Schnittstelle zu Komponenten zu verstehen, sollte das Feature dennoch getestet werden,
-            sofern es von einer Komponente unterstützt wird.
+            sofern es von einer Komponente unterstützt wird. [SLIDE]
         </li>
     </ol>
     <h2>Stack der Unit Tests</h2>
@@ -196,7 +210,9 @@
     </ol>
 
     <code-import url="../snippets/HappyHippo.test.html.commented-example"></code-import>
-        
+    
+    <p>[SLIDE]</p>
+
     <h2>Ergänzungen</h2>
 
     <p>
@@ -206,6 +222,8 @@
     </p>
 
     <code-import url="../snippets/viewports.test.html.example"></code-import>
+
+    <p>[SLIDE]</p>
 
     <p>
         Am Ende vielleicht noch ein Blick auf unsere package.json inklusive einer Integration von Playwright und Puppeteer:

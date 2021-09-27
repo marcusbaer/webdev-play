@@ -23,7 +23,7 @@
 
 (01) <body>
 (03)     <happy-hippo name="Dingo">
-(03)         <p>Are you fine with that?</p>
+(03)         <p>Are you too?</p>
 (03)     </happy-hippo>
 
 (02)     <script type="module">
