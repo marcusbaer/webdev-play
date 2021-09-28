@@ -9,7 +9,14 @@
     "dev": "concurrently \"npm run start:dev\" \"npm run storybook\"",
     "start": "web-dev-server --open /pages/ --node-resolve",
     "start:dev": "web-dev-server --watch --open /pages/ --node-resolve",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "test": "web-test-runner \"test/**/*.test.{html,js}\" --node-resolve --coverage",
+    "test:browserstack": "echo \"Browserstack testing has not yet been setup!\"",
+    "test:playwright": "web-test-runner \"test/**/*.test.{html,js}\" --node-resolve --playwright --browsers chromium firefox",
+    "test:puppeteer": "wtr \"test/**/*.test.{html,js}\" --node-resolve --puppeteer",
+    "test:puppeteer:watch": "wtr \"test/**/*.test.{html,js}\" --node-resolve --puppeteer --watch",
+    "test:update-baseline": "web-test-runner test/**/*.test.html --node-resolve --update-visual-baseline",
+    "test:watch": "web-test-runner \"test/**/*.test.{html,js}\" --node-resolve --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -22,9 +29,13 @@
     "@web/dev-server-storybook": "^0.3.8",
     "@web/rollup-plugin-html": "^1.10.1",
     "@web/test-runner": "^0.13.18",
+    "@web/test-runner-browserstack": "^0.4.2",
+    "@web/test-runner-commands": "^0.5.12",
+    "@web/test-runner-playwright": "^0.8.8",
+    "@web/test-runner-puppeteer": "^0.10.2",
+    "@web/test-runner-visual-regression": "^0.6.3",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.1",
-    "lit-html": "^2.0.0",
     "storybook": "^6.3.8"
   }
 }
