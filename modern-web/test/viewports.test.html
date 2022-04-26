@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html {
+            font-size: 16px;
+        }
+
+        .card {
+            background: rgb(0, 255, 0);
+        }
+
+        @media screen and (min-width: 1024px) {
+            .card {
+                background: rgb(255, 0, 0);
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card"></div>
+
+    <script type="module">
+        import { runTests } from '@web/test-runner-mocha';
+        import { expect } from '@esm-bundle/chai';
+        import { setViewport } from '@web/test-runner-commands';
+
+        runTests(() => {
+            describe('mobile', () => {
+                beforeEach(async () => {
+                    await setViewport({ width: 360, height: 640 });
+                });
+                it('has a red background', async () => {
+                    const el = document.querySelector('.card');
+                    const color = getComputedStyle(el).backgroundColor;
+                    expect(color).to.equal('rgb(0, 255, 0)');
+                });
+                it('has a different font size', async () => {
+                    const el = document.querySelector('.card');
+                    const fontSize = getComputedStyle(el).fontSize;
+                    expect(fontSize).to.equal('16px');
+                });
+            });
+
+            describe('desktop', () => {
+                beforeEach(async () => {
+                    await setViewport({ width: 1200, height: 1000 });
+                });
+                it('has a red background', async () => {
+                    const el = document.querySelector('.card');
+                    const color = getComputedStyle(el).backgroundColor;
+                    expect(color).to.equal('rgb(255, 0, 0)');
+                });
+                it('has a different font size', async () => {
+                    const el = document.querySelector('.card');
+                    const fontSize = getComputedStyle(el).fontSize;
+                    expect(fontSize).to.equal('24px');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

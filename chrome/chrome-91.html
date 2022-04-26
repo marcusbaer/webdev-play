@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chrome 91</title>
+  </head>
+  <body>
+    <h1>Chrome 91</h1>
+
+    <h3>Reading files from the clipboard </h3>
+    <script>
+    function getBase64 (file, callback) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => callback(reader.result));
+      reader.readAsDataURL(file);
+    }
+
+    window.addEventListener('paste', onPaste);
+
+    async function onPaste(e) {
+      const file = e.clipboardData.files[0];
+      const contents = await file?.text();
+      if (file.type.indexOf('image') > -1) {
+        const image = document.createElement('img');
+        getBase64(file, function(base64Data){
+          image.src = base64Data;
+          document.body.appendChild(image);
+        });
+      } else if (contents) {
+        const textarea = document.createElement('textarea');
+        textarea.value = contents;
+        document.body.appendChild(textarea);
+      }
+    }
+    </script>
+  </body>
+</html>
+
