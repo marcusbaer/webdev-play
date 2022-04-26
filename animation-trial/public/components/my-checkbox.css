@@ -1,0 +1,11 @@
+:host {
+  background: orange;
+  display: inline-block;
+  cursor: pointer;
+  font-family: sans-serif;
+  height: 12px;
+  width: 12px;
+}
+:host(.checked) {
+  background: limegreen;
+}

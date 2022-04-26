@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danke</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <script src="https://unpkg.com/vue@3.2.28/dist/vue.global.prod.js"></script>
+    <script type="module">
+        import NavElement from './components/nav-element.js';
+        import YourEmail from './components/your-email.js';
+        import TeaserElement from './components/teaser-element.js';
+        customElements.define(NavElement.tagName, NavElement);
+        customElements.define(YourEmail.tagName, YourEmail);
+        customElements.define(TeaserElement.tagName, TeaserElement);
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="flex navlist">
+                <li>
+                    <nav-element href="./index.html">Startseite</nav-element>
+                </li>
+                <li>
+                    <nav-element href="#">Themen</nav-element>
+                </li>
+                <li>
+                    <nav-element href="#">Service</nav-element>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Vielen Dank</h1>
+        <p>Wir freuen uns darüber, dass Sie sich <your-email prefix="mit der Email-Adresse"></your-email> für unseren Newsletter angemeldet haben.</p>
+
+        <nav id="app">
+            <h2>{{ headline }}</h2>
+            <p>{{ message }}</p>
+            <ul class="flex navlist">
+                <li v-for="(entry, index) in teasers" v-bind:key="index">
+                    <teaser-element :headline="entry.title" :image="entry.img" :text="entry.text"></teaser-element>
+                </li>
+            </ul>
+        </nav>
+    </main>
+    <script src="./js/thankyou.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+:host {
+    display: block;
+}
+
+a {
+    color: orange;
+    display: block;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+a:focus, a:hover {
+    background-color: gainsboro;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter-Registrierung</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/animation.css">
+
+    <script type="module">
+        import MyCheckbox from './components/my-checkbox.js';
+        import NavElement from './components/nav-element.js';
+        customElements.define(MyCheckbox.tagName, MyCheckbox);
+        customElements.define(NavElement.tagName, NavElement);
+    </script>
+
+    <link rel="preload" as="script" href="https://unpkg.com/vue@3.2.28/dist/vue.global.prod.js">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="flex navlist">
+                <li>
+                    <nav-element href="./index.html">Startseite</nav-element>
+                </li>
+                <li>
+                    <nav-element href="#">Themen</nav-element>
+                </li>
+                <li>
+                    <nav-element href="#">Service</nav-element>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Für unseren Newsletter anmelden</h1>
+        <div class="flex">
+            <p class="newsletter-teaser">Registriere dich jetzt und bekomme jede Woche die neuesten Updates als Newsletter direkt in dein Postfach!</p>
+            <form class="newsletter-form" action="thankyou.html" method="GET">
+
+                <label for="email">Deine Email-Adresse</label>
+                <input id="email" type="email" name="email" />
+
+                <label>
+                    <my-checkbox title="AGB bestätigen" name="agreed" tabindex=0></my-checkbox> Ich habe die AGB gelesen.
+                </label>
+
+                <label>
+                    <my-checkbox title="Newsletter-Abo bestätigen" name="newsletter" tabindex=0 checked></my-checkbox> Ja, ich möchte den Newsletter wirklich.
+                </label>
+
+                <input type="reset" aria-label="Reset" />
+                <input type="submit" aria-label="Submit" class="primary" />
+            </form>
+        </div>
+        <script>
+            // const form = document.querySelector('form');
+            // form.addEventListener('submit', (event) => {
+            //     // event.preventDefault();
+            //     console.log(event.target.elements);
+            //     // console.log(event.target.checkValidity());
+            //     // event.target.reset();
+            // });
+        </script>
+    </main>
+</body>
+</html>

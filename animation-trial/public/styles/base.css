@@ -1,0 +1,74 @@
+:root {
+  --col-gray: #333;
+  --col-white: #fff;
+}
+html {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+body {
+  margin: 0;
+}
+header {
+  background-color: var(--col-gray);
+  color: var(--col-white);
+  height: 64px;
+}
+header ul.flex, header ul.flex > li {
+    margin: 0;
+}
+main {
+  margin: 1rem;
+}
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex > * {
+  flex: 0 0 100%;
+  margin: 0.5rem;
+  min-width: 250px;
+  max-width: 350px;
+}
+.navlist {
+    list-style: none;
+    padding: 0;
+}
+.primary {
+  background-color: limegreen;
+}
+.newsletter-form {
+  margin-top: 1rem;
+}
+.newsletter-form label {
+  display: block;
+  margin: 0.3rem 0;
+}
+.newsletter-form input[type="email"] {
+  font-size: 120%;
+  width: 96%;
+  margin: 0.5rem 0;
+}
+.newsletter-form :is(input[type="reset"], input[type="submit"]) {
+  border: 1px solid currentColor;
+  font-size: 100%;
+  margin: 0.5rem 0;
+  padding: 0.3rem;
+}
+.newsletter-teaser {
+  line-height: 150%;
+  margin: 0;
+}
+@media only screen and (min-width: 768px) {
+  .flex > * {
+    flex: 1;
+  }
+  .newsletter-form {
+    background-color: gainsboro;
+    margin-top: 0;
+    padding: 1rem;
+  }
+  .newsletter-form label {
+    font-size: 80%;
+  }
+}
